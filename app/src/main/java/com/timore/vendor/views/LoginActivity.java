@@ -50,7 +50,6 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
         forgetPassTv.setOnClickListener(this);
         signUpTv.setOnClickListener(this);
 
-
     }
 
     @Override

@@ -13,6 +13,7 @@ public class VAR {
     public static final java.lang.String KEY_URL = "IAMGEURL";
     public static final java.lang.String KEY_USER_NAME = "USERNAME";
     public static final String KEY_POST = "POST";
+    public static final String KEY_IS_MY_PROFILE = "ISMYPROFILE";
     public static String PREF_NAME = "f";
     public static String KEY_USER_ID = "s";
 }

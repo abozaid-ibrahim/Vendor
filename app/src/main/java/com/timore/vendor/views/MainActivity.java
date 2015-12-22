@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         addPostFragment = new AddPostFragment();
-        mFragmentList.add(new MainTab(ProfileFragment.getInstance(App.userId), 0, getString(R.string.hello_blank_fragment), R.drawable.profile));
+        mFragmentList.add(new MainTab(ProfileFragment.getInstance(App.userId, false), 0, getString(R.string.hello_blank_fragment), R.drawable.profile));
         mFragmentList.add(new MainTab(new NotificationFragment(), 1, getString(R.string.hello_blank_fragment), R.drawable.notification));
 
         mFragmentList.add(new MainTab(addPostFragment, 2, getString(R.string.hello_blank_fragment), R.drawable.gallery));

@@ -78,16 +78,19 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
     @Bind(R.id.profile_recyclerView)
     RecyclerView recyclerView;
     Profile profile;
+    private boolean isMyProfile;
+    private Button logoutButton;
 
     public ProfileFragment() {
     }
 
-    public static ProfileFragment getInstance(long id) {
+    public static ProfileFragment getInstance(long id, boolean isMyProfile) {
 //        if (instance == null) {
         instance = new ProfileFragment();
 //        }
         Bundle bundle = new Bundle();
         bundle.putLong(VAR.KEY_USER_ID, id);
+        bundle.putBoolean(VAR.KEY_IS_MY_PROFILE, isMyProfile);
         instance.setArguments(bundle);
         return instance;
     }
@@ -98,6 +101,8 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
         super.onCreate(savedInstanceState);
 
         userId = getArguments().getLong(VAR.KEY_USER_ID);
+
+        isMyProfile = getArguments().getBoolean(VAR.KEY_IS_MY_PROFILE);
     }
 
     @Override
@@ -125,9 +130,13 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
         listView.setOnClickListener(this);
         gridIcon.setOnClickListener(this);
         mapIcon.setOnClickListener(this);
-        if (userId != App.userId)
-            layout.findViewById(R.id.profile_logout).setVisibility(View.GONE);
-        layout.findViewById(R.id.profile_logout).setOnClickListener(this);
+
+        logoutButton = (Button) layout.findViewById(R.id.profile_logout);
+        logoutButton.setOnClickListener(this);
+        if (isMyProfile) {
+            logoutButton.setText("Follow");
+            editProfile.setText("Message");
+        }
 //        getUser();
         getUser(userId);
         getUserPosts(userId);
@@ -236,18 +245,26 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.profile_edit:
-                if (profile != null) {
-                    Intent edit = new Intent(getActivity(), EditProfileActivity.class);
-                    edit.putExtra(SuperActivity.PROFILE, Parcels.wrap(profile));
-                    startActivity(edit);
-                } else {
+                if (isMyProfile) {
+                    if (profile != null) {
+                        Intent edit = new Intent(getActivity(), EditProfileActivity.class);
+                        edit.putExtra(SuperActivity.PROFILE, Parcels.wrap(profile));
+                        startActivity(edit);
+                    } else {
 
+                    }
+                } else {
+                    //message
                 }
                 break;
             case R.id.profile_logout:
-                getActivity().getSharedPreferences(VAR.PREF_NAME, 0).edit().clear().commit();
-                startActivity(new Intent(getActivity(), LoginActivity.class));
-                getActivity().finish();
+                if (isMyProfile) {
+                    getActivity().getSharedPreferences(VAR.PREF_NAME, 0).edit().clear().commit();
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                    getActivity().finish();
+                } else {
+                    //unfollow
+                }
                 break;
             case R.id.profile_iv_twitter:
                 if (profile != null)

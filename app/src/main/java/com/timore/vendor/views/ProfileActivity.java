@@ -21,7 +21,7 @@ public class ProfileActivity extends SuperActivity {
         super.setToolBar(findViewById(R.id.toolbar), true);
         if (getIntent().getExtras() != null) {
             userId = getIntent().getExtras().getLong(VAR.KEY_USER_ID);
-            getSupportFragmentManager().beginTransaction().add(R.id.user_container, ProfileFragment.getInstance(userId)).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.user_container, ProfileFragment.getInstance(userId,false)).commit();
         }else{
             if (!App.isConnected(this))
                 Snackbar.make(findViewById(R.id.main_layout), getString(R.string.no_net), Snackbar.LENGTH_LONG).show();

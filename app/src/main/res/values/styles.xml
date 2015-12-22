@@ -2,7 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:windowBackground">@drawable/bg</item>
+        <item name="android:windowBackground">@drawable/background</item>
         <item name="android:typeface">monospace</item>
         <item name="android:buttonStyle">@style/buttons</item>
         <item name="android:textViewStyle">@style/textview</item>
