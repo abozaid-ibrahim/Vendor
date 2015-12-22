@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Define the background properties like color etc -->
+    <item android:id="@android:id/background">
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="2dp"
+                android:color="#FFF" />
+
+            <corners android:radius="5dp" />
+            <gradient
+                android:angle="270"
+                android:centerY="1.0"
+                android:endColor="@color/colorGray"
+                android:startColor="@color/colorGray" />
+        </shape>
+    </item>
+
+    <!-- Define the progress properties like start color, end color etc -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape android:shape="rectangle">
+                <corners android:radius="5dp" />
+
+                <gradient
+                    android:angle="270"
+                    android:centerColor="#fff"
+                    android:centerY="1.0"
+                    android:endColor="@color/colorGray"
+                    android:startColor="#fff" />
+            </shape>
+        </clip>
+    </item>
+</layer-list> 

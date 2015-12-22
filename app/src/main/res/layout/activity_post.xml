@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.timore.vendor.views.PostActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/default_toolbar" />
+
+        <include layout="@layout/activity_progress" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/post_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <EditText
+                android:background="@color/textInputLayoutBG"
+                android:id="@+id/post_et_comment"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                android:hint="@string/write_comment"
+                android:layout_marginRight="5dp"
+                android:padding="5dp"
+                android:imeActionLabel="comment"
+                android:imeOptions="actionSend" />
+
+
+            <Button
+                android:id="@+id/submit_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/Comment" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

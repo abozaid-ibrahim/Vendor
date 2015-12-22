@@ -1,0 +1,86 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".views.home.MainFragment">
+
+    <include layout="@layout/profile_header" />
+<View
+    android:layout_width="match_parent"
+    android:layout_height="2dp"
+    android:layout_margin="5dp"
+    android:background="@drawable/button_bg"/>
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:shrinkColumns="*"
+
+        android:stretchColumns="*">
+
+        <TableRow>
+
+            <ImageView
+                android:id="@+id/profile_facebook"
+                style="@style/profile_iv_icons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/facebook" />
+
+            <ImageView
+                android:id="@+id/profile_iv_twitter"
+                style="@style/profile_iv_icons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/twitter" />
+
+            <ImageView
+                android:id="@+id/profile_instagram"
+                style="@style/profile_iv_icons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/instagram" />
+
+            <ImageView
+                android:id="@+id/profile_map"
+                style="@style/profile_iv_icons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/map" />
+
+            <ImageView
+                android:id="@+id/profile_listIcon"
+                style="@style/profile_iv_icons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/listview" />
+
+            <ImageView
+                android:id="@+id/profile_grid_icon"
+                style="@style/profile_iv_icons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/gradview" />
+        </TableRow>
+    </TableLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/button_bg"/>
+    <GridView
+        android:id="@+id/profile_gird"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/profile_recyclerView"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        android:numColumns="3" />
+</LinearLayout>

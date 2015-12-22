@@ -1,0 +1,50 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowBackground">@drawable/bg</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:buttonStyle">@style/buttons</item>
+        <item name="android:textViewStyle">@style/textview</item>
+        <item name="android:editTextStyle">@style/et</item>
+
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <!--WIDGET STYLES-->
+    <style name="profile_iv_icons">
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="buttons" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/button_bg</item>
+        <item name="android:textColor">@color/button_text</item>
+    </style>
+
+    <style name="imagebutton" parent="Widget.AppCompat.Button">
+        <item name="android:background">@null</item>
+        <item name="android:textColor">@color/button_text</item>
+    </style>
+
+    <style name="textview">
+        <item name="android:gravity">right</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:textColor">@color/titles_text_color</item>
+        <item name="android:text">0</item>
+    </style>
+    <style name="et">
+        <item name="android:gravity">right</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>
