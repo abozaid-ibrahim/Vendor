@@ -34,7 +34,7 @@ public class PostActions {
         holder.dateTv.setText(post.getDate_insert());
         holder.menuEdit.setVisibility(post.getUser_id() == App.userId ? View.VISIBLE : View.GONE);
         holder.menuDelete.setVisibility(post.getUser_id() == App.userId ? View.VISIBLE : View.GONE);
-        Image.obj(context).setImage(holder.imageView, post.getFile(), R.drawable.logomin);
+        Image.obj(context).setImage(holder.imageView, post.getFile(), R.drawable.logomin_trans);
         Image.obj(context).setImage(holder.logoView, post.getUser_image(), R.drawable.usericon);
 
         holder.likeBtn.setImageResource(post.getLike() == 1 ? R.drawable.liked : R.drawable.like);

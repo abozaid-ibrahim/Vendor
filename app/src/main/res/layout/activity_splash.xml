@@ -11,9 +11,13 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:src="@drawable/logomin"/>
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
 
+    android:src="@drawable/logo"/>
     <ProgressBar
         android:id="@+id/splash_progressBar"
         style="?android:attr/progressBarStyleHorizontal"

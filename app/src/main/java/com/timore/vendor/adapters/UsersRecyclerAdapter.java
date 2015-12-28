@@ -39,7 +39,7 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
         holder.titleTv.setText(data.get(position).getUsername());
         holder.dateTv.setText(data.get(position).getDate_insert());
         holder.followBtn.setText(data.get(position).getFollow() == 0 ? context.getString(R.string.follow) : context.getString(R.string.unfollow));
-        Image.obj(context).setImage(holder.logoView,data.get(position).getImage());
+        Image.obj(context).setImage(holder.logoView,data.get(position).getImage(),R.drawable.usericon);
 
         holder.followBtn.setOnClickListener(new View.OnClickListener() {
             @Override

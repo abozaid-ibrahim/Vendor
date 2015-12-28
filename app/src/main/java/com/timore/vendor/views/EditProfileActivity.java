@@ -75,6 +75,7 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
     Profile profile;
     private GPSTracker gps;
     double lat = 0, longitude = 0;
+    private boolean imageChanged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,7 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
         setContentView(R.layout.activity_edit_profile);
         super.setToolBar(findViewById(R.id.toolbar), true);
         ButterKnife.bind(this);
+        imageChanged = false;
         profileImageView = (ImageView) findViewById(R.id.edit_porfile_image);
         init();
         gps = new GPSTracker(this);
@@ -105,13 +107,14 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
             instagramEt.setText(profile.getInstagram());
             twitterEt.setText(profile.getTwitter());
             fbEt.setText(profile.getFacebook());
-            System.err.println("prof image" + profile.getImage());
+            System.err.println("prof image>>>>>>" + profile.getImage());
             if (profile.getImage() != null && profile.getImage().length() > 4)
                 Image.obj(this).setImage(profileImageView, profile.getImage());
         }
         submit.setOnClickListener(this);
         passBtn.setOnClickListener(this);
         profileImgBtn.setOnClickListener(this);
+        profileImageView.setOnClickListener(this);
     }
 
     public void uploadImage() {
@@ -142,7 +145,8 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
     }
 
 
-    final String KEY_IMAGE_PATH="FILEPATH";
+    final String KEY_IMAGE_PATH = "FILEPATH";
+
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
@@ -158,7 +162,7 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
         System.err.println("===========onRestoreInstanceState===========================");
         try {
             if (savedInstanceState.containsKey(KEY_IMAGE_PATH)) {
-                if(savedInstanceState.getString(KEY_IMAGE_PATH)!=null)
+                if (savedInstanceState.getString(KEY_IMAGE_PATH) != null)
                     CameraImage.photoFile = new File(savedInstanceState.getString(KEY_IMAGE_PATH));
                 System.err.println("===========onRestoreInstanceState===========================" + CameraImage.photoFile.getAbsolutePath());
             }
@@ -168,9 +172,8 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
     }
 
 
-
     private void updateProfile(String imgName) {
-        System.err.println("IMAGE NAME: "+ imgName);
+        System.err.println("IMAGE NAME: " + imgName);
         Retrofit.getInstance().updateAccount(1, usernameEt.getText().toString(),
                 mobileEt.getText().toString(), imgName
                 , App.userId, aboutEt.getText().toString()
@@ -206,7 +209,7 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
 
     @Override
     protected void onDestroy() {
-        CameraImage.photoFile=null;
+        CameraImage.photoFile = null;
 
         super.onDestroy();
         ButterKnife.unbind(this);
@@ -217,15 +220,19 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.edit_btn_update:
-                if (validInputs())
-                    uploadImage();
-                else
+                if (validInputs()) {
+                    if (imageChanged)
+                        uploadImage();
+                    else updateProfile(null);
+
+                } else
                     Snackbar.make(v, getString(R.string.checkInputs), Snackbar.LENGTH_LONG).show();
                 break;
 
             case R.id.edit_btn_password:
                 new ChangePasswordDialog(this).show();
                 break;
+            case R.id.edit_porfile_image:
             case R.id.edit_btn_uploadimage:
                 Utils.uploadImage(this);
                 break;
@@ -254,7 +261,7 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
         System.err.println("ON ACTIVITY RESULT");
         if (resultCode == RESULT_OK) {
             System.err.println("ON ACTIVITY RESULT RESULT_OK");
-
+            imageChanged = true;
             if (requestCode == VAR.PICK_IAMGE) {
                 System.err.println("ON ACTIVITY RESULT PICK_IAMGE");
                 Uri selectedImage = data.getData();

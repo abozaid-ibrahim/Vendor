@@ -128,7 +128,7 @@ public class AddPostFragment extends android.support.v4.app.Fragment implements 
     private void updateUI(Profile profile) {
         userName.setText(profile.getUsername());
         userDate.setText(profile.getDate_insert());
-        Image.obj(getActivity()).setImage(userImage, profile.getImage(),R.drawable.galleryselected);
+        Image.obj(getActivity()).setImage(userImage, profile.getImage(), R.drawable.usericon);
 
     }
 

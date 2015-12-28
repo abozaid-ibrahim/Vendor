@@ -200,7 +200,10 @@ public interface ServiceInterface {
 
    @FormUrlEncoded
     @POST("/profile/get")
-    void getUserProfile(@Field("user_id") long userId, Callback<Profile> cb);
+    void getUserProfile(@Field("user_id") long userId, Callback<Profile> cb);@FormUrlEncoded
+
+    @POST("/profile/get")
+    void getUserProfileTest(@Field("user_id") long userId, Callback<JsonObject> cb);
 /*
     @FormUrlEncoded
     @POST("/profile/get")

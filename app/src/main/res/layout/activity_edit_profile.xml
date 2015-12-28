@@ -28,18 +28,19 @@
 
 
             <FrameLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="160dp"
-
+                android:layout_gravity="center_horizontal"
                 android:orientation="vertical">
 
                 <com.pkmmte.view.CircularImageView
                     android:id="@+id/edit_porfile_image"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:border="true"
-                    android:layout_gravity="center"
+                    android:src="@drawable/comment"
+                    android:layout_gravity="center_horizontal"
                     app:border_color="@color/circular_image_border_color"
                     app:border_width="4dp"
                     app:shadow="true"/>
@@ -184,6 +185,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:gravity="top"
+                    android:background="@drawable/rounded_border_grey"
                     android:hint="@string/about"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -191,7 +193,7 @@
             <Button
                 android:id="@+id/edit_btn_password"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
 
                 android:layout_marginBottom="5dp"
@@ -201,7 +203,7 @@
             <Button
                 android:id="@+id/edit_btn_update"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/Update"/>
         </LinearLayout>

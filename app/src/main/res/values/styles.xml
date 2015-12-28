@@ -39,12 +39,15 @@
         <item name="android:textColor">@color/titles_text_color</item>
         <item name="android:text">0</item>
     </style>
+
     <style name="et">
+        <item name="android:padding">5dp</item>
+        <item name="android:background">@drawable/rounded_border_grey</item>
         <item name="android:gravity">right</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
 </resources>

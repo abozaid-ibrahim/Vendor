@@ -51,7 +51,7 @@ public class PostsGridAdapter extends BaseAdapter {
 
         holder.titleTv.setText(data.get(position).getTitle());
         holder.contentTv.setText(data.get(position).getContent());
-        Image.obj(context).setImage(holder.postIv, data.get(position).getFile());
+        Image.obj(context).setImage(holder.postIv, data.get(position).getFile(),R.drawable.logomin_trans);
 
         return convertView;
     }

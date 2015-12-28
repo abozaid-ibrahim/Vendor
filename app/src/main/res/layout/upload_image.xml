@@ -8,6 +8,7 @@
         android:id="@+id/upload_imageview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="5dp"
         android:src="@drawable/usericon" />
 
     <Button
