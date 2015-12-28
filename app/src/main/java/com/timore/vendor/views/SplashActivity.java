@@ -10,17 +10,16 @@ import com.timore.vendor.R;
 import com.timore.vendor.control.App;
 
 public class SplashActivity extends AppCompatActivity {
-    public Intent main;
-
     private static final int DURATION = 2000;
     private static final int INTERVAL = 20;
+    public Intent main;
     private ProgressBar progressBar;
     private Thread thread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        setContentView(R.layout.activity_main2);
         progressBar = (ProgressBar) findViewById(R.id.splash_progressBar);
         progress();
 
