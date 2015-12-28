@@ -5,12 +5,18 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.util.Log;
 
 import com.timore.vendor.beanBojo.Post;
 import com.timore.vendor.views.EditPostActivity;
 import com.timore.vendor.views.ProfileActivity;
 
 import org.parceler.Parcels;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by usear on 11/30/2015.
@@ -49,5 +55,31 @@ public class Utils {
         prof.putExtra(VAR.KEY_POST, Parcels.wrap(post));
 
         context.startActivity(prof);
+    }
+
+    static public String bitMapToString(String filePath) {
+        return bitMapToString(BitmapFactory.decodeFile(filePath));
+    }
+    static public String bitMapToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        System.err.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        System.err.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        System.err.println("SIZE IS "+ bitmap.getByteCount());
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String temp = null;
+        try {
+            System.gc();
+            temp = Base64.encodeToString(b, Base64.DEFAULT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } catch (OutOfMemoryError e) {
+            baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+            b = baos.toByteArray();
+            temp = Base64.encodeToString(b, Base64.DEFAULT);
+            Log.e("EWN", "Out of memory error catched");
+        }
+        return temp;
     }
 }

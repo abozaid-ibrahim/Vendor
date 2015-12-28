@@ -218,6 +218,6 @@ public interface ServiceInterface {
                     @Field("content") String content, Callback<JsonObject> cb);
 @FormUrlEncoded
     @POST("/upload")
-    void uploadImage( @Field("image") File image,Callback<JsonObject> cb);
+    void uploadImage( @Field("image") String image,Callback<JsonObject> cb);
 
 }

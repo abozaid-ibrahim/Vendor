@@ -70,5 +70,7 @@
     <string name="checkLink">برجاء التاكد من رابط الصفحه</string>
     <string name="title">العنوان</string>
     <string name="subject">الموضوع</string>
+    <string name="logout_now">Log out now?</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

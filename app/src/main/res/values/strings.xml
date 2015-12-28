@@ -70,4 +70,6 @@
     <string name="checkLink">Enter valid url</string>
     <string name="title">Title</string>
     <string name="subject">Subject</string>
+    <string name="logout_now">Log out now?</string>
+    <string name="cancel">Cancel</string>
 </resources>

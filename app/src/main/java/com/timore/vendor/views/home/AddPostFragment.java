@@ -88,6 +88,8 @@ public class AddPostFragment extends android.support.v4.app.Fragment implements 
         userName = (TextView) layout.findViewById(R.id.addpost_header_username);
         menuView = layout.findViewById(R.id.addpost_header_option);
         imageView = (ImageView) layout.findViewById(R.id.upload_imageview);
+        imageView.setOnClickListener(this);
+
         label = (TextView) layout.findViewById(R.id.addpost_lbl_addnewpost);
         titleEt = (EditText) layout.findViewById(R.id.addpost_et_title);
         subjectEt = (EditText) layout.findViewById(R.id.addpost_et_subject);
@@ -133,7 +135,7 @@ public class AddPostFragment extends android.support.v4.app.Fragment implements 
     public void uploadPostImage(final View view) {
         MainActivity.progressBar.setVisibility(View.VISIBLE);
 
-        Retrofit.getInstance().uploadImage(CameraImage.photoFile, new Callback<JsonObject>() {
+        Retrofit.getInstance().uploadImage(Utils.bitMapToString(CameraImage.photoFile.getAbsolutePath()), new Callback<JsonObject>() {
             @Override
             public void success(JsonObject object, Response response) {
                 Retrofit.res(object + "", response);
@@ -245,6 +247,7 @@ public class AddPostFragment extends android.support.v4.app.Fragment implements 
                     Snackbar.make(v, getString(R.string.checkInputs), Snackbar.LENGTH_LONG).show();
                 break;
             case R.id.upload_image_button:
+            case R.id.upload_imageview:
                 Utils.uploadImage(getActivity());
                 break;
         }
@@ -253,7 +256,7 @@ public class AddPostFragment extends android.support.v4.app.Fragment implements 
     private void updatePostImage(final View view) {
         MainActivity.progressBar.setVisibility(View.VISIBLE);
 
-        Retrofit.getInstance().uploadImage(CameraImage.photoFile, new Callback<JsonObject>() {
+        Retrofit.getInstance().uploadImage(Utils.bitMapToString(CameraImage.photoFile.getAbsolutePath()), new Callback<JsonObject>() {
             @Override
             public void success(JsonObject object, Response response) {
                 Retrofit.res(object + "", response);

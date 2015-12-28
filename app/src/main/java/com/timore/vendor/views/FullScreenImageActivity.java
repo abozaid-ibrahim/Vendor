@@ -28,7 +28,6 @@ public class FullScreenImageActivity extends SuperActivity implements View.OnCli
 
 //        url = "http://cdn.cavemancircus.com//wp-content/uploads/images/2014/november/pretty_girls_4/pretty_girls_1.jpg";
             Image.obj(this).setImage(imageView, url, progress);
-//            Image.obj(this).setImage(imageView,url, R.drawable.logo_2);
 
         }
     }

@@ -1,9 +1,11 @@
 package com.timore.vendor.views.home;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -133,8 +135,8 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
 
         logoutButton = (Button) layout.findViewById(R.id.profile_logout);
         logoutButton.setOnClickListener(this);
-        if (isMyProfile) {
-            logoutButton.setText("Follow");
+        if (!isMyProfile) {
+            logoutButton.setText(getString(R.string.follow));
             editProfile.setText("Message");
         }
 //        getUser();
@@ -251,17 +253,36 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
                         edit.putExtra(SuperActivity.PROFILE, Parcels.wrap(profile));
                         startActivity(edit);
                     } else {
-
+                        System.err.println("????? PROFILE OBJECT IS NULL");
                     }
                 } else {
+
                     //message
                 }
                 break;
             case R.id.profile_logout:
                 if (isMyProfile) {
-                    getActivity().getSharedPreferences(VAR.PREF_NAME, 0).edit().clear().commit();
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                    getActivity().finish();
+
+                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                            .setTitle(getString(R.string.logout)).setMessage(getString(R.string.logout_now))
+                            .setPositiveButton(getString(R.string.logout), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    getActivity().getSharedPreferences(VAR.PREF_NAME, 0).edit().clear().commit();
+                                    dialog.dismiss();
+                                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                                    getActivity().finish();
+
+                                }
+                            }).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }).create();
+                    alertDialog.show();
+
                 } else {
                     //unfollow
                 }

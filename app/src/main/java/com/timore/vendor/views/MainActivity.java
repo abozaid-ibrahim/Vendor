@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -23,6 +24,7 @@ import com.timore.vendor.views.home.NotificationFragment;
 import com.timore.vendor.views.home.ProfileFragment;
 import com.timore.vendor.views.home.SearchFragment;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         addPostFragment = new AddPostFragment();
-        mFragmentList.add(new MainTab(ProfileFragment.getInstance(App.userId, false), 0, getString(R.string.hello_blank_fragment), R.drawable.profile));
+        mFragmentList.add(new MainTab(ProfileFragment.getInstance(App.userId, true), 0, getString(R.string.hello_blank_fragment), R.drawable.profile));
         mFragmentList.add(new MainTab(new NotificationFragment(), 1, getString(R.string.hello_blank_fragment), R.drawable.notification));
 
         mFragmentList.add(new MainTab(addPostFragment, 2, getString(R.string.hello_blank_fragment), R.drawable.gallery));
@@ -85,6 +87,31 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setCurrentItem(4);
     }
 
+    final String KEY_IMAGE_PATH="FILEPATH";
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        System.err.println("===========onSaveInstanceState===========================");
+        if (CameraImage.photoFile != null)
+            outState.putString(KEY_IMAGE_PATH, CameraImage.photoFile.getAbsolutePath());
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        System.err.println("===========onRestoreInstanceState===========================");
+        try {
+            if (savedInstanceState.containsKey(KEY_IMAGE_PATH)) {
+                if(savedInstanceState.getString(KEY_IMAGE_PATH)!=null)
+                CameraImage.photoFile = new File(savedInstanceState.getString(KEY_IMAGE_PATH));
+                System.err.println("===========onRestoreInstanceState===========================" + CameraImage.photoFile.getAbsolutePath());
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //super.onActivityResult(requestCode, resultCode, data);
@@ -96,13 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 CameraImage.getImageFile(getBaseContext(), data);
 
             } else if (requestCode == VAR.OPEN_CAMERA) {
-                try {
-                    addPostFragment.imageView.setImageBitmap(BitmapFactory.decodeFile(CameraImage.photoFile.getAbsolutePath()));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    CameraImage.setPic(addPostFragment.imageView);
-
-                }
+                addPostFragment.imageView.setImageBitmap(BitmapFactory.decodeFile(CameraImage.photoFile.getAbsolutePath()));
 //                addPostFragment.imageView.setImageBitmap(Utils.getCapturedImage(data));
             }
         }

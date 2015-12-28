@@ -41,7 +41,6 @@
 
 
     <com.pkmmte.view.CircularImageView
-
         android:id="@+id/commentItem_image"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="80dp"

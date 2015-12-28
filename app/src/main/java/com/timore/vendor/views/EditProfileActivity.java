@@ -29,6 +29,8 @@ import com.timore.vendor.control.VAR;
 
 import org.parceler.Parcels;
 
+import java.io.File;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit.Callback;
@@ -115,7 +117,7 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
     public void uploadImage() {
         progressBar.setVisibility(View.VISIBLE);
 
-        Retrofit.getInstance().uploadImage(CameraImage.photoFile, new Callback<JsonObject>() {
+        Retrofit.getInstance().uploadImage(Utils.bitMapToString(CameraImage.photoFile.getAbsolutePath()), new Callback<JsonObject>() {
             @Override
             public void success(JsonObject object, Response response) {
                 Retrofit.res(object + "", response);
@@ -138,6 +140,34 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
             }
         });
     }
+
+
+    final String KEY_IMAGE_PATH="FILEPATH";
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        System.err.println("===========onSaveInstanceState===========================");
+        if (CameraImage.photoFile != null)
+            outState.putString(KEY_IMAGE_PATH, CameraImage.photoFile.getAbsolutePath());
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        System.err.println("===========onRestoreInstanceState===========================");
+        try {
+            if (savedInstanceState.containsKey(KEY_IMAGE_PATH)) {
+                if(savedInstanceState.getString(KEY_IMAGE_PATH)!=null)
+                    CameraImage.photoFile = new File(savedInstanceState.getString(KEY_IMAGE_PATH));
+                System.err.println("===========onRestoreInstanceState===========================" + CameraImage.photoFile.getAbsolutePath());
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     private void updateProfile(String imgName) {
         System.err.println("IMAGE NAME: "+ imgName);
@@ -216,20 +246,6 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
         }
 
         return true;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        System.err.println("onSaveInstanceState");
-        //outState.putParcelable("file_uri", Parcels.wrap(CameraImage.photoFile));
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        System.err.println("onRestoreInstanceState");
-        //CameraImage.photoFile = savedInstanceState.getParcelable("file_uri");
     }
 
     @Override
