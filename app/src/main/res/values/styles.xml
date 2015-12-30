@@ -7,7 +7,8 @@
         <item name="android:buttonStyle">@style/buttons</item>
         <item name="android:textViewStyle">@style/textview</item>
         <item name="android:editTextStyle">@style/et</item>
-
+        <item name="editTextStyle">@style/et</item>
+        <item name="android:textColorHint">@color/colorHint</item>
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -40,7 +41,9 @@
         <item name="android:text">0</item>
     </style>
 
-    <style name="et">
+    <style name="et" parent="android:Widget.EditText">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColorHint">@color/colorHint</item>
         <item name="android:padding">5dp</item>
         <item name="android:background">@drawable/rounded_border_grey</item>
         <item name="android:gravity">right</item>

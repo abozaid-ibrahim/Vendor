@@ -84,12 +84,14 @@
                 android:id="@+id/profile_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:paddingRight="5dp"
-                android:paddingLeft="5dp"
+                android:layout_gravity="center_horizontal"
                 android:background="@drawable/rounded_border_white"
 
-                android:layout_gravity="center_horizontal"
-                android:text="@string/edit_profile" />
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+
+                android:text="@string/edit_profile"
+                android:textColor="@color/button_text"/>
 
             <View
                 android:layout_width="10dp"
@@ -99,11 +101,12 @@
                 android:id="@+id/profile_logout"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:paddingRight="5dp"
-                android:paddingLeft="5dp"
-                android:background="@drawable/rounded_border_white"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/logout" />
+                android:background="@drawable/rounded_border_white"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/logout"
+                android:textColor="@color/button_text"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -112,16 +115,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.pkmmte.view.CircularImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <include
             android:id="@+id/profile_iv"
+            layout="@layout/rounded_imageview"
             android:layout_width="80dp"
             android:layout_height="60dp"
             android:src="@drawable/usericon"
-            app:border="true"
-            app:border_color="@color/circular_image_border_color"
-            app:border_width="4dp"
-            app:shadow="true"/>
+            />
 
         <TextView
             android:id="@+id/profile_tv_name"

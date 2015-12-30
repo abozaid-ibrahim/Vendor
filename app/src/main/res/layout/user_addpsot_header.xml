@@ -32,16 +32,13 @@
             android:layout_height="wrap_content"
             android:maxLines="2"/>
     </LinearLayout>
-    <com.pkmmte.view.CircularImageView
+
+    <include
         android:id="@+id/addpost_header_imageview"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        layout="@layout/rounded_imageview"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:src="@drawable/galleryselected"
-        app:border="true"
-        app:border_color="@color/circular_image_border_color"
-        app:border_width="4dp"
-        app:shadow="true"/>
-
+        />
 
 </LinearLayout>

@@ -40,17 +40,14 @@
     </LinearLayout>
 
 
-    <com.pkmmte.view.CircularImageView
+    <include
         android:id="@+id/commentItem_image"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+        layout="@layout/rounded_imageview"
         android:layout_width="80dp"
         android:layout_height="match_parent"
         android:background="@null"
         android:scaleType="centerInside"
         android:src="@drawable/usericon"
-        app:border="true"
-        app:border_color="@color/circular_image_border_color"
-        app:border_width="4dp"
-        app:shadow="true"/>
-
+        />
 </LinearLayout>

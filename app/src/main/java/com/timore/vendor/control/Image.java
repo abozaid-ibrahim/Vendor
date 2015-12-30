@@ -9,17 +9,17 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by usear on 11/30/2015.
  */
 public class Image {
     private static Context context;
+    private static Image image;
 
     private Image() {
     }
-
-    private static Image image;
 
     public static Image obj(Context cont) {
         context = cont;
@@ -31,12 +31,21 @@ public class Image {
     public void setImage(ImageView image, String url) {
         System.err.println("IMAGE URL "+VAR.IMAGE_URL+url);
 
-        Glide.with(context).load(VAR.IMAGE_URL+url).into(image);
+        Picasso.with(context).load(VAR.IMAGE_URL + url).into(image);
+//        Glide.with(context).load(VAR.IMAGE_URL+url).into(image);
     }
 
     public void setImage(ImageView image, String url, int err) {
         System.err.println("IMAGE URL "+VAR.IMAGE_URL+url);
-        Glide.with(context).load(VAR.IMAGE_URL+url).placeholder(err).error(err).into(image);
+        try {
+            Picasso.with(context).load(VAR.IMAGE_URL + url).error(err).into(image);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Picasso.with(context).load(VAR.IMAGE_URL + url).into(image);
+
+        }
+
+//        Glide.with(context).load(VAR.IMAGE_URL+url).placeholder(err).error(err).into(image);
     }
 
     public void setImage(final ImageView image, String url, final ProgressBar progressBar) {

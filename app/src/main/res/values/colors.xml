@@ -9,13 +9,13 @@
     <color name="colorRowLine">#292928</color>
     <color name="colorBg">#262626</color>
     <color name="color_tabText">#fff</color>
+    <color name="colorHint">#aaffffff</color>
     <color name="circular_image_border_color">#EEEEEE</color>
     <color name="button_bg">#737363</color>
     <color name="tab_item_bg_selected">#000</color>
     <color name="tab_item_bg_unselected">#4a493d</color>
     <color name="tab_item_indicator_color">#000</color>
     <color name="button_text">#fff</color>
-    <color name="textInputLayoutBG">#fff</color>
     <color name="titles_text_color">#FFF</color>
 
 </resources>

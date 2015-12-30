@@ -36,7 +36,7 @@ public class PostActions {
         holder.menuDelete.setVisibility(post.getUser_id() == App.userId ? View.VISIBLE : View.GONE);
         Image.obj(context).setImage(holder.imageView, post.getFile(), R.drawable.logomin_trans);
         Image.obj(context).setImage(holder.logoView, post.getUser_image(), R.drawable.usericon);
-
+//        Glide.with(context).load(VAR.IMAGE_URL+post.getUser_image()).into(holder.logoView);
         holder.likeBtn.setImageResource(post.getLike() == 1 ? R.drawable.liked : R.drawable.like);
         holder.likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override

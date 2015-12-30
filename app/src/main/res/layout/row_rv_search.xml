@@ -7,8 +7,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
 
 
 
@@ -16,9 +16,9 @@
         <Button
             android:id="@+id/search_row_follow"
             android:layout_width="wrap_content"
-            android:layout_gravity="center_vertical"
-
             android:layout_height="40dp"
+
+            android:layout_gravity="center_vertical"
             android:text="@string/Follow" />
         <LinearLayout
             android:layout_width="0dp"
@@ -34,25 +34,19 @@
 
             <TextView
                 android:id="@+id/search_row_date"
-                android:textColor="@color/button_bg"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/button_bg"/>
         </LinearLayout>
 
-        <com.pkmmte.view.CircularImageView
-
+        <include
             android:id="@+id/search_row_logo"
+            layout="@layout/rounded_imageview"
             android:layout_width="80dp"
             android:layout_height="60dp"
             android:background="@null"
             android:src="@drawable/usericon"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:scaleType="centerInside"
-            app:border="true"
-            app:border_color="@color/circular_image_border_color"
-            app:border_width="4dp"
-            app:shadow="true"/>
-
+            />
     </LinearLayout>
 
 
@@ -61,9 +55,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:visibility="gone"
+        android:orientation="horizontal"
 
-        android:orientation="horizontal">
+        android:visibility="gone">
 
         <Button
             android:id="@+id/search_row_message"

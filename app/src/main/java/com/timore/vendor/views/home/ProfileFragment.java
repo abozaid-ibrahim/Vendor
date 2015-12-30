@@ -47,13 +47,11 @@ import retrofit.client.Response;
 
 public class ProfileFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
     private static ProfileFragment instance;
-    private long userId;
     View layout;
-
-    /*Views*/
-
     @Bind(R.id.profile_edit)
     Button editProfile;
+
+    /*Views*/
     @Bind(R.id.profile_instagram)
     ImageView instagramView;
     @Bind(R.id.profile_facebook)
@@ -81,6 +79,7 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
     @Bind(R.id.profile_recyclerView)
     RecyclerView recyclerView;
     Profile profile;
+    private long userId;
     private boolean isMyProfile;
     private Button logoutButton;
 
@@ -136,7 +135,7 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
 
         logoutButton = (Button) layout.findViewById(R.id.profile_logout);
         logoutButton.setOnClickListener(this);
-        logoutButton.setText(isMyProfile ? getString(R.string.logout) : false ? getString(R.string.unfollow) : getString(R.string.follow));
+        logoutButton.setText(isMyProfile ? getString(R.string.logout) : getString(R.string.follow));
         editProfile.setVisibility(isMyProfile ? View.VISIBLE : View.GONE);
         getUser();
         getUser(userId);
@@ -225,10 +224,10 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
     private void updateUI(Profile profil) {
         if (profil != null) {
             profile = profil;
-            logoutButton.setText(isMyProfile ? getString(R.string.logout) : false ? getString(R.string.unfollow) : getString(R.string.follow));
+            logoutButton.setText(isMyProfile ? getString(R.string.logout) : getString(R.string.unfollow));
             followersTv.setText(String.valueOf(profile.getFollowing()));
             followingTv.setText(String.valueOf(profile.getFollower()));
-            imagesTv.setText(String.valueOf(profile.getImage()));
+            imagesTv.setText(String.valueOf(profile.getPosts()));
             nameTv.setText(profile.getUsername());
             Image.obj(getActivity()).setImage(profileImage, profile.getImage(), R.drawable.usericon);
         }

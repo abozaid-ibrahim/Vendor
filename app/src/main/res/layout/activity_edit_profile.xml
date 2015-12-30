@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF"
     android:orientation="vertical">
 
     <include layout="@layout/default_toolbar"/>
@@ -33,17 +32,14 @@
                 android:layout_gravity="center_horizontal"
                 android:orientation="vertical">
 
-                <com.pkmmte.view.CircularImageView
+                <include
                     android:id="@+id/edit_porfile_image"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:layout_width="match_parent"
+                    layout="@layout/rounded_imageview"
+                    android:layout_width="240dp"
                     android:layout_height="match_parent"
-                    app:border="true"
-                    android:src="@drawable/comment"
                     android:layout_gravity="center_horizontal"
-                    app:border_color="@color/circular_image_border_color"
-                    app:border_width="4dp"
-                    app:shadow="true"/>
+                    android:src="@drawable/comment"
+                    />
 
                 <Button
                     android:id="@+id/edit_btn_uploadimage"
@@ -57,17 +53,18 @@
 
 
             <android.support.design.widget.TextInputLayout
+                style="@style/Widget.Design.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.Design.TextInputLayout"
-                android:layout_marginBottom="5dp"
-                android:background="@color/textInputLayoutBG">
+                android:layout_marginBottom="5dp">
 
                 <EditText
                     android:id="@+id/edit_et_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/user_name"/>
+                    android:background="@drawable/rounded_border_grey"
+                    android:hint="@string/user_name"
+                    android:padding="5dp"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -75,14 +72,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-            >
+                >
 
                 <EditText
                     android:id="@+id/edit_et_email"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_border_grey"
                     android:hint="@string/email"
-                    android:inputType="textEmailAddress"/>
+                    android:inputType="textEmailAddress"
+
+                    android:padding="5dp"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -90,14 +91,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:background="@color/textInputLayoutBG">
+                >
 
                 <EditText
                     android:id="@+id/edit_et_mobile"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_border_grey"
                     android:hint="@string/mobile"
-                    android:inputType="phone"/>
+                    android:inputType="phone"
+
+                    android:padding="5dp"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -106,13 +111,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:background="@color/textInputLayoutBG">
+                >
 
                 <EditText
                     android:id="@+id/edit_et_hashtag"
                     android:layout_width="match_parent"
+
                     android:layout_height="wrap_content"
-                    android:hint="@string/hashtag"/>
+                    android:background="@drawable/rounded_border_grey"
+                    android:hint="@string/hashtag"
+
+                    android:padding="5dp"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -120,73 +129,90 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:background="@color/textInputLayoutBG">
-
-                <EditText
-                    android:id="@+id/edit_et_facebook"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/facebook"/>
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:background="@color/textInputLayoutBG">
-
-                <EditText
-                    android:id="@+id/edit_et_twitter"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/twitter"/>
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:background="@color/textInputLayoutBG">
-
-                <EditText
-                    android:id="@+id/edit_et_website"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/website"/>
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:background="@color/textInputLayoutBG"
                 >
 
                 <EditText
+                    android:id="@+id/edit_et_facebook"
 
-                    android:id="@+id/edit_et_instagram"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/instagram"/>
+                    android:background="@drawable/rounded_border_grey"
+                    android:hint="@string/facebook"
+
+                    android:padding="5dp"/>
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/textInputLayoutBG"
+                android:layout_marginBottom="5dp"
+                >
+
+                <EditText
+                    android:id="@+id/edit_et_twitter"
+
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_border_grey"
+                    android:hint="@string/twitter"
+                    android:padding="5dp"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                >
+
+                <EditText
+                    android:id="@+id/edit_et_website"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_border_grey"
+
+                    android:hint="@string/website"
+                    android:padding="5dp"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+
+                >
+
+                <EditText
+                    android:id="@+id/edit_et_instagram"
+
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_border_grey"
+                    android:hint="@string/instagram"
+                    android:padding="5dp"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
                 >
 
                 <EditText
                     android:id="@+id/edit_et_about"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:gravity="top"
+
                     android:background="@drawable/rounded_border_grey"
-                    android:hint="@string/about"/>
+                    android:gravity="top"
+                    android:hint="@string/about"
+                    android:padding="5dp"/>
 
             </android.support.design.widget.TextInputLayout>
 

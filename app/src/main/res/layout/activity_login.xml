@@ -20,10 +20,10 @@
             android:layout_gravity="center"
 
 
+            android:orientation="vertical"
             android:paddingBottom="@dimen/activity_vertical_margin"
             android:paddingLeft="@dimen/activity_vertical_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:orientation="vertical">
+            android:paddingRight="@dimen/activity_horizontal_margin">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -38,32 +38,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/textInputLayoutBG">
+                android:layout_marginTop="20dp">
 
                 <EditText
                     android:id="@+id/login_userName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_border_grey"
                     android:drawableRight="@drawable/user"
+
                     android:gravity="right"
-                    android:hint="@string/user_name"/>
+                    android:hint="@string/user_name"
+                    android:padding="5dp"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:background="@color/textInputLayoutBG">
+                android:layout_marginBottom="5dp">
 
                 <EditText
                     android:id="@+id/login_userPassword"
                     android:layout_width="match_parent"
+
                     android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_border_grey"
                     android:drawableRight="@drawable/password"
                     android:gravity="right"
                     android:hint="@string/password"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword"
+                    android:padding="5dp"/>
             </android.support.design.widget.TextInputLayout>
 
 
