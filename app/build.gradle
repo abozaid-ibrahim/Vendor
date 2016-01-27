@@ -8,8 +8,8 @@ android {
         applicationId "com.timore.vendor"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 3
-        versionName "1.2"
+        versionCode 5
+        versionName "1.4"
         multiDexEnabled true
     }
     buildTypes {
@@ -43,6 +43,5 @@ dependencies {
     compile 'org.parceler:parceler:0.2.13'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.pkmmte.view:circularimageview:1.1'
-
     compile 'com.google.android.gms:play-services-maps:8.4.0'
 }

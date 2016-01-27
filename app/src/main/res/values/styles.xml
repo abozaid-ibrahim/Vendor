@@ -42,7 +42,7 @@
     </style>
 
     <style name="et" parent="android:Widget.EditText">
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/edittext_text_color</item>
         <item name="android:textColorHint">@color/colorHint</item>
         <item name="android:padding">5dp</item>
         <item name="android:background">@drawable/rounded_border_grey</item>

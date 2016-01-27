@@ -1,46 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
+              android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical"
-              tools:context=".views.home.MainFragment">
-
+              android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="10.0dip"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="5dp">
-
-        <Button
-            android:id="@+id/search_button_search"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/button_bg"
-            android:text="@string/search"/>
-
+        android:padding="5.0dip">
 
         <EditText
             android:id="@+id/search_et_search"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_width="0.0dip"
+            android:layout_height="40.0dip"
+            android:layout_weight="1.0"
             android:background="@drawable/rounded_solid_white"
             android:gravity="center_vertical"
             android:hint="@string/search"
             android:imeActionLabel="@string/search"
             android:imeOptions="actionSearch"
-            android:padding="5dp"/>
-    </LinearLayout>
+            android:padding="5.0dip"
+            android:textColor="#ff000000"
+            android:textColorHint="#ffcccccc"/>
 
+        <Button
+            android:id="@+id/search_button_search"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:background="@drawable/button_bg"
+            android:text="@string/search"/>
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/search_recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="5dp"/>
-
-
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:padding="5.0dip"/>
 </LinearLayout>

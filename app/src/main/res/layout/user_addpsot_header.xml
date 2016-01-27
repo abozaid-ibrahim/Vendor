@@ -1,44 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="96dp"
+              android:layout_width="fill_parent"
+              android:layout_height="96.0dip"
               android:orientation="horizontal">
+
+    <include
+        android:id="@+id/addpost_header_imageview"
+        layout="@layout/rounded_imageview"
+        android:layout_width="96.0dip"
+        android:layout_height="96.0dip"
+        android:src="@drawable/galleryselected"/>
+
+    <LinearLayout
+        android:layout_width="0.0dip"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="5.0dip">
+
+        <TextView
+            android:id="@+id/addpost_header_username"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:padding="5.0dip"/>
+
+        <TextView
+            android:id="@+id/addpost_header_date"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:padding="5.0dip"
+            android:textColor="@color/button_bg"/>
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/addpost_header_option"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:padding="5dp"
+        android:layout_margin="5.0dip"
+        android:padding="5.0dip"
         android:src="@drawable/menu"/>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="5dp">
-
-        <TextView
-            android:id="@+id/addpost_header_username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="2"/>
-
-        <TextView
-            android:id="@+id/addpost_header_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="2"/>
-    </LinearLayout>
-
-    <include
-        android:id="@+id/addpost_header_imageview"
-        layout="@layout/rounded_imageview"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:src="@drawable/galleryselected"
-        />
-
 </LinearLayout>

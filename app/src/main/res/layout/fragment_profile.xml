@@ -1,25 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              tools:context=".views.home.MainFragment">
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
 
     <include layout="@layout/profile_header"/>
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_margin="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="2.0dip"
+        android:layout_margin="5.0dip"
         android:background="@drawable/button_bg"/>
 
     <TableLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:shrinkColumns="*"
         android:stretchColumns="*">
-
         <TableRow>
 
             <ImageView
@@ -67,24 +65,24 @@
     </TableLayout>
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_margin="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="2.0dip"
+        android:layout_margin="5.0dip"
         android:background="@drawable/button_bg"/>
 
     <GridView
         android:id="@+id/profile_gird"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:horizontalSpacing="10dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:horizontalSpacing="10.0dip"
         android:numColumns="3"
-        android:padding="5dp"
-        android:verticalSpacing="10dp"/>
+        android:padding="5.0dip"
+        android:verticalSpacing="10.0dip"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/profile_recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:numColumns="3"
         android:visibility="gone"/>
 </LinearLayout>

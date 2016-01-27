@@ -1,87 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
+              android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
     <FrameLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="@dimen/post_rv_item_menu_height"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/main_row_menu"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@null"
-                android:padding="5dp"
-                android:src="@drawable/menu"/>
-
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
+                <include
+                    android:id="@+id/main_row_logo"
+                    layout="@layout/rounded_imageview"
+                    android:layout_width="96.0dip"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/profile"/>
+
                 <TextView
                     android:id="@+id/main_row_name"
-
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:padding="5dp"/>
+                    android:padding="5.0dip"/>
 
                 <TextView
                     android:id="@+id/main_row_date"
-                    android:layout_width="match_parent"
-
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:padding="5dp"/>
+                    android:padding="5.0dip"/>
             </LinearLayout>
 
-            <include
-                android:id="@+id/main_row_logo"
-                layout="@layout/rounded_imageview"
-                android:layout_width="96dp"
+            <ImageButton
+                android:id="@+id/main_row_menu"
+                android:layout_width="60.0dip"
                 android:layout_height="wrap_content"
-                android:src="@drawable/profile"
-                />
-
+                android:layout_marginTop="5.0dip"
+                android:background="@null"
+                android:padding="5.0dip"
+                android:src="@drawable/menu"/>
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/main_menu"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/post_rv_item_menu_height"
-            android:layout_marginLeft="60dp"
+            android:layout_gravity="end"
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="gone">
 
             <ImageView
                 android:id="@+id/main_row_edit"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="5.0dip"
                 android:src="@drawable/edit"
                 android:text=""/>
 
             <ImageView
                 android:id="@+id/main_row_delete"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="5.0dip"
                 android:src="@drawable/delete"
                 android:text=""/>
 
@@ -92,36 +83,32 @@
                 android:src="@drawable/report"
                 android:text=""/>
         </LinearLayout>
-
-
     </FrameLayout>
 
     <TextView
         android:id="@+id/main_row_content"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:gravity="right"
-        android:padding="5dp"/>
+        android:layout_marginTop="5.0dip"
+        android:padding="5.0dip"/>
 
     <ImageView
         android:id="@+id/main_row_image"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="@dimen/large_image_height"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="5.0dip"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="5.0dip">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-
-            android:text=""/>
+        <ImageButton
+            android:id="@+id/main_row_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/like"/>
 
         <ImageButton
             android:id="@+id/main_row_comment"
@@ -129,13 +116,10 @@
             android:layout_height="wrap_content"
             android:src="@drawable/comment"/>
 
-        <ImageButton
-
-            android:id="@+id/main_row_like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/like"/>
+        <TextView
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:text=""/>
     </LinearLayout>
-
-
 </LinearLayout>

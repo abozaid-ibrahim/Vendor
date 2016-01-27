@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="160dp"
-    android:background="#fff"
-    android:orientation="vertical">
+              android:layout_width="fill_parent"
+              android:layout_height="160.0dip"
+              android:background="#ffffffff"
+              android:orientation="vertical">
 
     <ImageView
         android:id="@+id/post_grow_image"
-        android:layout_width="match_parent"
-        android:layout_height="100dp" />
+        android:layout_width="fill_parent"
+        android:layout_height="100.0dip"/>
 
     <TextView
         android:id="@+id/post_grow_title"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:maxLines="1"
-        android:textColor="@color/color_posts_grid" />
+        android:textColor="@color/color_posts_grid"/>
 
     <TextView
         android:id="@+id/post_grow_content"
-
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
         android:gravity="center"
         android:maxLines="2"
-        android:textColor="@color/color_posts_grid" />
+        android:textColor="@color/color_posts_grid"/>
 </LinearLayout>

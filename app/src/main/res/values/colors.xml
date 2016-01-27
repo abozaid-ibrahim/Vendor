@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#59295b</color>
-    <color name="colorPrimaryDark">#59295b</color>
-    <color name="colorAccent">#ba79bc</color>
-
-    <color name="color_posts_grid">#000</color>
-    <color name="colorGray">#4d4b3f</color>
-    <color name="colorRowLine">#292928</color>
-    <color name="colorBg">#262626</color>
-    <color name="color_tabText">#fff</color>
+    <color name="button_bg">#ff737363</color>
+    <color name="button_text">#ffffffff</color>
+    <color name="circular_image_border_color">#ffeeeeee</color>
+    <color name="colorAccent">#ffffffff</color>
+    <color name="colorBg">#ff262626</color>
+    <color name="colorGray">#ff4d4b3f</color>
     <color name="colorHint">#aaffffff</color>
-    <color name="circular_image_border_color">#EEEEEE</color>
-    <color name="button_bg">#737363</color>
-    <color name="tab_item_bg_selected">#000</color>
-    <color name="tab_item_bg_unselected">#4a493d</color>
-    <color name="tab_item_indicator_color">#000</color>
-    <color name="button_text">#fff</color>
-    <color name="titles_text_color">#FFF</color>
-
+    <color name="edittext_text_color">#FFFFFF</color>
+    <color name="colorPrimary">#ff59295b</color>
+    <color name="colorPrimaryDark">#ff59295b</color>
+    <color name="colorRowLine">#ff292928</color>
+    <color name="color_posts_grid">#ff000000</color>
+    <color name="color_tabText">#ffffffff</color>
+    <color name="spb_default_color">#ff33b5e5</color>
+    <color name="tab_item_bg_selected">#ff000000</color>
+    <color name="tab_item_bg_unselected">#ff4a493d</color>
+    <color name="tab_item_indicator_color">#ff000000</color>
+    <color name="titles_text_color">#ffffffff</color>
 </resources>

@@ -1,54 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    android:id="@+id/main_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.timore.vendor.views.PostActivity">
+<android.support.design.widget.CoordinatorLayout android:id="@+id/main_layout"
+                                                 xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 android:layout_width="fill_parent"
+                                                 android:layout_height="fill_parent"
+                                                 android:fitsSystemWindows="true">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:orientation="vertical">
-
         <include layout="@layout/default_toolbar" />
-
         <include layout="@layout/activity_progress" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/post_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_width="fill_parent"
+            android:layout_height="0.0dip"
+            android:layout_weight="1.0"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="5dp">
+            android:padding="5.0dip">
 
             <EditText
                 android:id="@+id/post_et_comment"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
+                android:layout_width="0.0dip"
+                android:layout_height="40.0dip"
+                android:layout_weight="1.0"
                 android:hint="@string/write_comment"
                 android:imeActionLabel="comment"
                 android:imeOptions="actionSend"
-                android:padding="5dp"/>
-
+                android:padding="5.0dip"/>
 
             <Button
                 android:id="@+id/submit_comment"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/Comment" />
+                android:layout_height="fill_parent"
+                android:text="@string/Comment"/>
         </LinearLayout>
     </LinearLayout>
-
-
 </android.support.design.widget.CoordinatorLayout>

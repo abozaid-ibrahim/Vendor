@@ -1,126 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.design.widget.CoordinatorLayout
-    android:id="@+id/main_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.timore.vendor.views.LoginActivity">
+<android.support.design.widget.CoordinatorLayout android:id="@+id/main_layout"
+                                                 xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 android:layout_width="fill_parent"
+                                                 android:layout_height="fill_parent"
+                                                 android:fitsSystemWindows="true">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/default_toolbar" />
+        <include layout="@layout/default_toolbar"/>
 
         <android.support.v4.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:fitsSystemWindows="true"
             android:paddingBottom="@dimen/activity_horizontal_margin"
             android:paddingLeft="@dimen/activity_vertical_margin"
             android:paddingRight="@dimen/activity_horizontal_margin">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="10.0dip"
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="match_parent"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/logomin" />
+                        android:src="@drawable/logomin"/>
 
-                    <include layout="@layout/submit_progress" />
+                    <include layout="@layout/submit_progress"/>
                 </LinearLayout>
 
                 <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="15dp"
-                    >
+                    android:layout_marginBottom="5.0dip"
+                    android:layout_marginTop="15.0dip">
 
                     <EditText
                         android:id="@+id/signup_userName"
-                        android:layout_width="match_parent"
-
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_border_grey"
-                        android:drawableRight="@drawable/user"
+                        android:drawableStart="@drawable/user"
                         android:hint="@string/user_name"
-                        android:padding="5dp"/>
+                        android:padding="5.0dip"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp">
+                    android:layout_marginBottom="5.0dip">
 
                     <EditText
                         android:id="@+id/signup_userPassword"
-                        android:layout_width="match_parent"
-
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_border_grey"
-                        android:drawableRight="@drawable/password"
+                        android:drawableStart="@drawable/password"
                         android:hint="@string/password"
                         android:inputType="textPassword"
-                        android:padding="5dp"/>
+                        android:padding="5.0dip"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp">
+                    android:layout_marginBottom="5.0dip">
 
                     <EditText
                         android:id="@+id/signup_userEmail"
-                        android:layout_width="match_parent"
-
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_border_grey"
-                        android:drawableRight="@drawable/email"
+                        android:drawableStart="@drawable/email"
                         android:hint="@string/email"
                         android:inputType="textEmailAddress"
-                        android:padding="5dp"/>
+                        android:padding="5.0dip"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp">
+                    android:layout_marginBottom="5.0dip">
 
                     <EditText
                         android:id="@+id/signup_confEmail"
-                        android:layout_width="match_parent"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_border_grey"
-                        android:drawableRight="@drawable/email"
+                        android:drawableStart="@drawable/email"
                         android:hint="@string/conf_email"
                         android:inputType="textEmailAddress"
-
-                        android:padding="5dp"/>
+                        android:padding="5.0dip"/>
                 </android.support.design.widget.TextInputLayout>
-
 
                 <Button
                     android:id="@+id/signup_submit"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/button_height"
                     android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/register" />
+                    android:layout_marginTop="20.0dip"
+                    android:text="@string/register"/>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
     </LinearLayout>

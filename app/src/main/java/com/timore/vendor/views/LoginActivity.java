@@ -28,7 +28,6 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
 
     @Bind(R.id.submit_progress)
     ProgressBar loginProgress;
-
     @Bind(R.id.login_forgetPassword)
     TextView forgetPassTv;
     @Bind(R.id.login_signUp)
@@ -138,7 +137,6 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
         } else {
             userPassEt.setError(null);
         }
-
         return true;
     }
 }

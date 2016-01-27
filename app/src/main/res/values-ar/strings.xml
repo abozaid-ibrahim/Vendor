@@ -4,7 +4,7 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_splash">SplashActivity</string>
 
-    <string name="hello_blank_fragment"></string>
+    <string name="hello_blank_fragment">text</string>
     <string name="password">كلمة المرور</string>
     <string name="login">دخول</string>
     <string name="signup">انشاء حساب جديد</string>

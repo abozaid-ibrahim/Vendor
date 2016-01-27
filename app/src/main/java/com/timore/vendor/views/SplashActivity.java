@@ -14,7 +14,7 @@ public class SplashActivity extends AppCompatActivity {
     private static final int INTERVAL = 20;
     public Intent main;
     private ProgressBar progressBar;
-    private Thread thread;
+    private CountDownTimer counter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
     void progress() {
         progressBar.setMax(DURATION);
 
-       new CountDownTimer(DURATION, INTERVAL) {
+        counter = new CountDownTimer(DURATION, INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
                 progressBar.setProgress((int) (DURATION-millisUntilFinished)+INTERVAL);
@@ -47,7 +47,19 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(main);
 
             }
-        }.start();
+        };
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        counter.start();
+    }
+
+    @Override
+    protected void onPause() {
+        counter.cancel();
+        super.onPause();
     }
 }

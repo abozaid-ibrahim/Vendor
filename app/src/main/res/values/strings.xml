@@ -4,10 +4,12 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_splash">SplashActivity</string>
 
-    <string name="hello_blank_fragment"></string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="user_name">User Name</string>
     <string name="password">Password</string>
+    <string name="hello_blank_fragment">text</string>
+
+    <string name="posts">Posts</string>
     <string name="login">Login</string>
     <string name="signup">Create new account</string>
     <string name="forgetPassword">Forget Password</string>
@@ -72,4 +74,5 @@
     <string name="subject">Subject</string>
     <string name="logout_now">Log out now?</string>
     <string name="cancel">Cancel</string>
+    <string name="title_activity_dummy">DummyActivity</string>
 </resources>
