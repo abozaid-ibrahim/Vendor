@@ -62,7 +62,6 @@ public class Utils {
     public static void uploadImage(final Fragment paramFragment) {
         AlertDialog.Builder localBuilder = new AlertDialog.Builder(paramFragment.getContext());
         localBuilder.setTitle("Pick image");
-
         localBuilder.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt) {
                 CameraImage.dispatchTakePictureIntent(paramFragment);
