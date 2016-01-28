@@ -4,7 +4,6 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_splash">SplashActivity</string>
 
-    <string name="hello_blank_fragment">text</string>
     <string name="password">كلمة المرور</string>
     <string name="login">دخول</string>
     <string name="signup">انشاء حساب جديد</string>
@@ -72,5 +71,6 @@
     <string name="subject">الموضوع</string>
     <string name="logout_now">خروج الان?</string>
     <string name="cancel">الغاء</string>
+    <string name="add_image">اضف صوره</string>
 
 </resources>

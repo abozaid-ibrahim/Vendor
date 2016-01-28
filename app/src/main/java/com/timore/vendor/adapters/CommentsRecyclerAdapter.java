@@ -19,10 +19,10 @@ import java.util.List;
  * Created by Abuzeid on 11/27/2015.
  */
 public class CommentsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    Context context;
-    public List<Comment> data;
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
+    public List<Comment> data;
+    Context context;
     private Post post;
 
     public CommentsRecyclerAdapter(Context context, Post post, List<Comment> data) {
@@ -39,7 +39,7 @@ public class CommentsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         } else if (viewType == TYPE_HEADER) {
             //inflate your layout and pass it to view holder
-            return new PostViewHolder(LayoutInflater.from(context).inflate(R.layout.row_rv_main, parent, false));
+            return new PostViewHolder(LayoutInflater.from(context).inflate(R.layout.row_rv_post, parent, false));
 
         }
         return null;

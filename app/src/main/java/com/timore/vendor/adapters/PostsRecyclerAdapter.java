@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 
 import com.timore.vendor.R;
 import com.timore.vendor.beanBojo.Post;
-import com.timore.vendor.control.PostActions;
 import com.timore.vendor.beanBojo.PostViewHolder;
+import com.timore.vendor.control.PostActions;
 
 import java.util.List;
 
@@ -16,8 +16,8 @@ import java.util.List;
  * Created by Abuzeid on 11/27/2015.
  */
 public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostViewHolder> {
-    Context context;
     public List<Post> data;
+    Context context;
 
     public PostsRecyclerAdapter(Context context, List<Post> data) {
         this.context = context;
@@ -26,7 +26,7 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostViewHolder> {
 
     @Override
     public PostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new PostViewHolder(LayoutInflater.from(context).inflate(R.layout.row_rv_main, parent, false));
+        return new PostViewHolder(LayoutInflater.from(context).inflate(R.layout.row_rv_post, parent, false));
     }
 
     @Override

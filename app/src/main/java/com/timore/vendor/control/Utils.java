@@ -7,8 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v4.app.Fragment;
 import android.util.Base64;
-import android.util.Log;
 
 import com.timore.vendor.beanBojo.Post;
 import com.timore.vendor.views.EditPostActivity;
@@ -18,68 +18,60 @@ import org.parceler.Parcels;
 
 import java.io.ByteArrayOutputStream;
 
-/**
- * Created by usear on 11/30/2015.
- */
 public class Utils {
-
-
-    public static void uploadImage(final Activity activity) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setTitle("Pick image");
-        builder.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                CameraImage.dispatchTakePictureIntent(activity);
-            }
-        });
-        builder.setNegativeButton("Gallery", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                CameraImage.openGallery(activity);
-            }
-        });
-        builder.create().show();
-    }
-
-    public static void gotoUserProfile(Context context, long id) {
-        Intent prof = new Intent(context, ProfileActivity.class);
-        System.err.println("ID IS " + id);
-        prof.putExtra(VAR.KEY_USER_ID, id);
-        context.startActivity(prof);
-    }
-
-
-    public static void editPost(int position, Context context, Post post) {
-        Intent prof = new Intent(context, EditPostActivity.class);
-        prof.putExtra(VAR.KEY_POST, Parcels.wrap(post));
-
-        context.startActivity(prof);
-    }
-
-    static public String bitMapToString(String filePath) {
-        return bitMapToString(BitmapFactory.decodeFile(filePath));
-    }
     static public String bitMapToString(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        System.err.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-        System.err.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-        System.err.println("SIZE IS "+ bitmap.getByteCount());
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] b = baos.toByteArray();
-        String temp = null;
-        try {
-            System.gc();
-            temp = Base64.encodeToString(b, Base64.DEFAULT);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } catch (OutOfMemoryError e) {
-            baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
-            b = baos.toByteArray();
-            temp = Base64.encodeToString(b, Base64.DEFAULT);
-            Log.e("EWN", "Out of memory error catched");
-        }
-        return temp;
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+        baos = new ByteArrayOutputStream();
+        return Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+    }
+
+    public static String bitMapToString(String paramString) {
+        return bitMapToString(BitmapFactory.decodeFile(paramString));
+    }
+
+    public static void editPost(int paramInt, Context paramContext, Post paramPost) {
+        Intent localIntent = new Intent(paramContext, EditPostActivity.class);
+        localIntent.putExtra("POST", Parcels.wrap(paramPost));
+        paramContext.startActivity(localIntent);
+    }
+
+    public static void gotoUserProfile(Context paramContext, long paramLong) {
+        Intent localIntent = new Intent(paramContext, ProfileActivity.class);
+        System.err.println("ID IS " + paramLong);
+        localIntent.putExtra(VAR.KEY_USER_ID, paramLong);
+        paramContext.startActivity(localIntent);
+    }
+
+    public static void uploadImage(final Activity paramActivity) {
+        AlertDialog.Builder localBuilder = new AlertDialog.Builder(paramActivity);
+        localBuilder.setTitle("Pick image");
+        localBuilder.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt) {
+                CameraImage.dispatchTakePictureIntent(paramActivity);
+            }
+        });
+        localBuilder.setNegativeButton("Gallery", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt) {
+                CameraImage.openGallery(paramActivity);
+            }
+        });
+        localBuilder.create().show();
+    }
+
+    public static void uploadImage(final Fragment paramFragment) {
+        AlertDialog.Builder localBuilder = new AlertDialog.Builder(paramFragment.getContext());
+        localBuilder.setTitle("Pick image");
+        localBuilder.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt) {
+                CameraImage.dispatchTakePictureIntent(paramFragment);
+            }
+        });
+        localBuilder.setNegativeButton("Gallery", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt) {
+                CameraImage.openGallery(paramFragment);
+            }
+        });
+        localBuilder.create().show();
     }
 }

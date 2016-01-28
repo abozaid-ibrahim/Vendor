@@ -3,11 +3,12 @@ package com.timore.vendor.views.home;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,7 +20,9 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.timore.vendor.R;
+import com.timore.vendor.adapters.PostImagesAdapter;
 import com.timore.vendor.beanBojo.Post;
+import com.timore.vendor.beanBojo.PostImage;
 import com.timore.vendor.beanBojo.Profile;
 import com.timore.vendor.control.App;
 import com.timore.vendor.control.CameraImage;
@@ -32,17 +35,16 @@ import com.timore.vendor.views.MainActivity;
 import org.parceler.Parcels;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class AddPostFragment
-        extends Fragment
-        implements OnClickListener {
+public class AddPostFragment extends Fragment implements OnClickListener {
     final String KEY_IMAGE_PATH = "FILEPATH";
-    public ImageView imageView;
     protected View menuView;
     View layout;
     EditText subjectEt;
@@ -54,6 +56,9 @@ public class AddPostFragment
     private TextView userDate;
     private ImageView userImage;
     private TextView userName;
+    private RecyclerView imagesRecyclerView;
+    private List<PostImage> postImagesArray;
+    private PostImagesAdapter adapter;
 
     private void enableView(View paramView, boolean paramBoolean) {
         paramView.setClickable(paramBoolean);
@@ -84,8 +89,7 @@ public class AddPostFragment
         userDate = (TextView) layout.findViewById(R.id.addpost_header_date);
         userName = (TextView) layout.findViewById(R.id.addpost_header_username);
         menuView = layout.findViewById(R.id.addpost_header_option);
-        imageView = (ImageView) layout.findViewById(R.id.upload_imageview);
-        imageView.setOnClickListener(this);
+
 
         label = (TextView) layout.findViewById(R.id.addpost_lbl_addnewpost);
         titleEt = (EditText) layout.findViewById(R.id.addpost_et_title);
@@ -97,6 +101,12 @@ public class AddPostFragment
         uploadBtn.setText(getString(R.string.upload_image));
         uploadBtn.setOnClickListener(this);
         MainActivity.progressBar.setVisibility(View.GONE);
+
+        imagesRecyclerView = (RecyclerView) layout.findViewById(R.id.addpost_images_recycler);
+        imagesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true));
+        postImagesArray = new ArrayList<>();
+        adapter = new PostImagesAdapter(getActivity(), postImagesArray);
+        imagesRecyclerView.setAdapter(adapter);
     }
 
     private void post(final View view, String imageName) {
@@ -111,7 +121,7 @@ public class AddPostFragment
                         if (id > 0) {
                             titleEt.setText(null);
                             subjectEt.setText(null);
-                            imageView.setImageResource(R.drawable.usericon);
+//                            adapt.clear;
                             Snackbar.make(view, getString(R.string.updated), Snackbar.LENGTH_LONG).show();
                         } else
                             Snackbar.make(view, getString(R.string.cant_update), Snackbar.LENGTH_LONG).show();
@@ -140,7 +150,7 @@ public class AddPostFragment
                         if (id > 0) {
                             titleEt.setText(null);
                             subjectEt.setText(null);
-                            imageView.setImageResource(R.drawable.usericon);
+//                            clear adat
                             Snackbar.make(view, getString(R.string.updated), Snackbar.LENGTH_LONG).show();
                         } else
                             Snackbar.make(view, getString(R.string.cant_update), Snackbar.LENGTH_LONG).show();
@@ -211,17 +221,19 @@ public class AddPostFragment
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //super.onActivityResult(requestCode, resultCode, data);
         System.err.println("ON ACTIVITY RESULT");
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == VAR.PICK_IAMGE) {
                 Uri selectedImage = data.getData();
-                this.imageView.setImageURI(selectedImage);
                 CameraImage.getImageFile(getContext(), data);
+                postImagesArray.add(new PostImage(CameraImage.photoFile.getPath(), null, null, selectedImage));
+                adapter.notifyItemInserted(adapter.getItemCount());
 
             } else if (requestCode == VAR.OPEN_CAMERA) {
-                this.imageView.setImageBitmap(BitmapFactory.decodeFile(CameraImage.photoFile.getAbsolutePath()));
+//                this.imageView.setImageBitmap(BitmapFactory.decodeFile(CameraImage.photoFile.getAbsolutePath()));
 //                addPostFragment.imageView.setImageBitmap(Utils.getCapturedImage(data));
+                postImagesArray.add(new PostImage(CameraImage.photoFile.getPath(), null, null, null));
+                adapter.notifyItemInserted(adapter.getItemCount());
             }
         }
     }
@@ -262,6 +274,7 @@ public class AddPostFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         layout = inflater.inflate(R.layout.fragment_addpost, container, false);
+
         init();
         long id = App.userId;
         try {
@@ -271,7 +284,7 @@ public class AddPostFragment
                 subjectEt.setText(post.getContent());
                 label.setText(getString(R.string.Update));
                 submitBtn.setText(getString(R.string.Update));
-                Image.obj(getActivity()).setImage(imageView, post.getFile());
+//                Image.obj(getActivity()).setImage(imageView, post.getFile());
                 id = post.getUser_id();
             }
         } catch (Exception e) {
@@ -357,8 +370,3 @@ public class AddPostFragment
 
 }
 
-
-/* Location:              C:\Users\Abuzeid\Desktop\temp\dex2jar-2.0\classes-dex2jar.jar!\com\timore\vendor\views\home\AddPostFragment.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       0.7.1
- */

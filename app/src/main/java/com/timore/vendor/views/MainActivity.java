@@ -59,22 +59,20 @@ public class MainActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         addPostFragment = new AddPostFragment();
         mFragmentList.add(new MainTab(ProfileFragment.getInstance(App.userId, true), 0, "", R.drawable.profile));
-        mFragmentList.add(new MainTab(new NotificationFragment(), 1, getString(R.string.hello_blank_fragment), R.drawable.notification));
+        mFragmentList.add(new MainTab(new NotificationFragment(), 1, "", R.drawable.notification));
 
-        mFragmentList.add(new MainTab(addPostFragment, 2, getString(R.string.hello_blank_fragment), R.drawable.gallery));
-        mFragmentList.add(new MainTab(new SearchFragment(), 3, getString(R.string.hello_blank_fragment), R.drawable.search));
-        mFragmentList.add(new MainTab(new MainFragment(), 4, getString(R.string.hello_blank_fragment), R.drawable.home));
+        mFragmentList.add(new MainTab(addPostFragment, 2, "", R.drawable.gallery));
+        mFragmentList.add(new MainTab(new SearchFragment(), 3, "", R.drawable.search));
+        mFragmentList.add(new MainTab(new MainFragment(), 4, "", R.drawable.home));
         PagerAdapter adapter = new MainViewPagerAdapter(getSupportFragmentManager(), mFragmentList);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
         for (int i = 0; i < mFragmentList.size(); i++) {
-            if (tabLayout.getTabAt(i) != null & mFragmentList.get(i) != null) {
-                tabLayout.getTabAt(i).setIcon(mFragmentList.get(i).getIcon());
-            }
-
+            tabLayout.getTabAt(i).setIcon(mFragmentList.get(i).getIcon());
         }
+
         viewPager.setCurrentItem(4);
     }
 

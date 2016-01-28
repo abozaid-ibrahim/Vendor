@@ -136,7 +136,8 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
         logoutButton = (Button) layout.findViewById(R.id.profile_logout);
         logoutButton.setOnClickListener(this);
         logoutButton.setText(isMyProfile ? getString(R.string.logout) : getString(R.string.follow));
-        editProfile.setVisibility(isMyProfile ? View.VISIBLE : View.GONE);
+        logoutButton.setText(isMyProfile ? getString(R.string.edit_profile) : getString(R.string.message));
+//        editProfile.setVisibility(isMyProfile ? View.VISIBLE : View.GONE);
         getUser();
         getUser(userId);
         getUserPosts(userId);
@@ -269,8 +270,12 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
 
                                     getActivity().getSharedPreferences(VAR.PREF_NAME, 0).edit().clear().commit();
                                     dialog.dismiss();
-                                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                                    getActivity().finish();
+                                    Intent loginAct = new Intent(getActivity(), LoginActivity.class);
+                                    loginAct.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    loginAct.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(loginAct);
+
+//                                    getActivity().finish();
 
                                 }
                             }).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
