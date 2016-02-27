@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.JsonArray;
@@ -14,36 +13,33 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.timore.vendor.R;
 import com.timore.vendor.control.App;
+import com.timore.vendor.control.NetworkLoading;
 import com.timore.vendor.control.Retrofit;
 import com.timore.vendor.control.SuperActivity;
 import com.timore.vendor.control.VAR;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class LoginActivity extends SuperActivity implements View.OnClickListener {
 
-    @Bind(R.id.submit_progress)
-    ProgressBar loginProgress;
-    @Bind(R.id.login_forgetPassword)
     TextView forgetPassTv;
-    @Bind(R.id.login_signUp)
     TextView signUpTv;
-    @Bind(R.id.login_submit)
     Button submit;
-    @Bind(R.id.login_userName)
     EditText userNameEt;
-    @Bind(R.id.login_userPassword)
     EditText userPassEt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
+        forgetPassTv = (TextView) findViewById(R.id.login_forgetPassword);
+        signUpTv = (TextView) findViewById(R.id.login_signUp);
+        submit = (Button) findViewById(R.id.login_submit);
+        userNameEt = (EditText) findViewById(R.id.login_userName);
+        userPassEt = (EditText) findViewById(R.id.login_userPassword);
+
 //        super.setToolBar(findViewById(R.id.toolbar));
         submit.setOnClickListener(this);
         forgetPassTv.setOnClickListener(this);
@@ -54,7 +50,6 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
     }
 
     @Override
@@ -85,7 +80,7 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
     }
 
     private void completeLogin() {
-        loginProgress.setVisibility(View.VISIBLE);
+        NetworkLoading.startLoading(this);
         Retrofit.getInstance().login(userNameEt.getText().toString().trim(),
                 userPassEt.getText().toString().trim(),
                 new Callback<JsonArray>() {
@@ -93,7 +88,7 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
                     public void success(JsonArray s, Response response) {
                         System.err.println(s);
                         Retrofit.res(s + "", response);
-                        loginProgress.setVisibility(View.GONE);
+                        NetworkLoading.stopLoading();
 
                         int id = 0;
                         JsonObject jsonObject = s.get(0).getAsJsonObject();
@@ -114,7 +109,7 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
 
                     @Override
                     public void failure(RetrofitError error) {
-                        loginProgress.setVisibility(View.GONE);
+                        NetworkLoading.stopLoading();
                         Retrofit.failure(error);
                         if (!App.isConnected(LoginActivity.this))
                             Snackbar.make(findViewById(R.id.main_layout), getString(R.string.no_net), Snackbar.LENGTH_LONG).show();

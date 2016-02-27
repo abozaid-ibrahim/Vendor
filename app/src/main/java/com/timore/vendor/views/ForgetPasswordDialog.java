@@ -5,6 +5,8 @@ import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.util.Patterns;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
@@ -28,7 +30,11 @@ public class ForgetPasswordDialog extends Dialog {
 
     public ForgetPasswordDialog(final Context context) {
         super(context);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_forget_password);
+        WindowManager.LayoutParams att = getWindow().getAttributes();
+        att.width = WindowManager.LayoutParams.MATCH_PARENT;
+        getWindow().setAttributes(att);
         setTitle(context.getString(R.string.forgetPassword));
         emailView = (EditText) findViewById(R.id.fpw_email);
         progressBar = (ProgressBar) findViewById(R.id.submit_progress);
@@ -73,7 +79,7 @@ public class ForgetPasswordDialog extends Dialog {
                     public void success(JsonObject object, Response response) {
                         Retrofit.res(object + "", response);
                         progressBar.setVisibility(View.GONE);
-                        int res = Integer.valueOf(object.get("success").toString());
+                        int res = Integer.valueOf(object.get("sucess").toString());
                         if (res > 0) {
                             emailView.setText("");
                             Snackbar.make(view, getContext().getString(R.string.newpass2mail), Snackbar.LENGTH_LONG).show();

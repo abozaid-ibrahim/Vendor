@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
 
+import com.timore.vendor.R;
 import com.timore.vendor.beanBojo.Post;
 import com.timore.vendor.views.EditPostActivity;
 import com.timore.vendor.views.ProfileActivity;
@@ -22,12 +23,12 @@ public class Utils {
     static public String bitMapToString(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
-        baos = new ByteArrayOutputStream();
         return Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+
     }
 
-    public static String bitMapToString(String paramString) {
-        return bitMapToString(BitmapFactory.decodeFile(paramString));
+    public static String bitMapToString(String path) {
+        return bitMapToString(BitmapFactory.decodeFile(path));
     }
 
     public static void editPost(int paramInt, Context paramContext, Post paramPost) {
@@ -36,10 +37,10 @@ public class Utils {
         paramContext.startActivity(localIntent);
     }
 
-    public static void gotoUserProfile(Context paramContext, long paramLong) {
+    public static void gotoUserProfile(Context paramContext, long userId, String userName) {
         Intent localIntent = new Intent(paramContext, ProfileActivity.class);
-        System.err.println("ID IS " + paramLong);
-        localIntent.putExtra(VAR.KEY_USER_ID, paramLong);
+        localIntent.putExtra(VAR.KEY_USER_ID, userId);
+        localIntent.putExtra(VAR.KEY_USER_NAME, userName);
         paramContext.startActivity(localIntent);
     }
 
@@ -61,13 +62,13 @@ public class Utils {
 
     public static void uploadImage(final Fragment paramFragment) {
         AlertDialog.Builder localBuilder = new AlertDialog.Builder(paramFragment.getContext());
-        localBuilder.setTitle("Pick image");
-        localBuilder.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
+        localBuilder.setTitle(paramFragment.getString(R.string.upload_image));
+        localBuilder.setPositiveButton(paramFragment.getString(R.string.camera), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt) {
                 CameraImage.dispatchTakePictureIntent(paramFragment);
             }
         });
-        localBuilder.setNegativeButton("Gallery", new DialogInterface.OnClickListener() {
+        localBuilder.setNegativeButton(paramFragment.getString(R.string.gallery), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt) {
                 CameraImage.openGallery(paramFragment);
             }

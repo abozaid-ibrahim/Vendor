@@ -32,6 +32,7 @@
                 android:id="@+id/addpost_et_title"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:gravity="start"
                 android:hint="@string/title"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -44,25 +45,36 @@
                 android:id="@+id/addpost_et_subject"
                 android:layout_width="fill_parent"
                 android:layout_height="144.0dip"
-                android:gravity="top"
+                android:gravity="start|top"
                 android:hint="@string/subject"/>
         </android.support.design.widget.TextInputLayout>
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                      android:layout_width="match_parent"
-                      android:layout_height="144.0dip"
-                      android:layout_gravity="center_horizontal"
-                      android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="@dimen/post_images_view_width"
+            android:layout_height="@dimen/post_images_view_height"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/addpost_images_recycler"
                 android:layout_width="fill_parent"
                 android:layout_height="0.0dip"
                 android:layout_weight="1.0"
-
                 android:background="#ffffffff"
+                android:gravity="center"
                 android:padding="5.0dip"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/addpost_post_image"
+                android:layout_width="fill_parent"
+                android:layout_height="0.0dip"
+                android:layout_weight="1.0"
+                android:background="#ffffffff"
+                android:gravity="center"
+                android:scaleType="fitCenter"
+                android:visibility="visible"/>
 
             <Button
                 android:id="@+id/upload_image_button"

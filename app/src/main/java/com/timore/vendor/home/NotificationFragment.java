@@ -1,10 +1,8 @@
-package com.timore.vendor.views.home;
+package com.timore.vendor.home;
 
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,11 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.timore.vendor.R;
-import com.timore.vendor.adapters.PostsRecyclerAdapter;
-import com.timore.vendor.beanBojo.Post;
+import com.timore.vendor.adapters.NotifRecyclerAdapter;
+import com.timore.vendor.beanBojo.Notif;
 import com.timore.vendor.control.App;
 import com.timore.vendor.control.Retrofit;
 import com.timore.vendor.views.MainActivity;
+import com.timore.vendor.views.RecycleItemDecoration;
 
 import java.util.List;
 
@@ -25,16 +24,18 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class MainFragment extends android.support.v4.app.Fragment {
+public class NotificationFragment extends android.support.v4.app.Fragment {
+    private static NotificationFragment instance;
     View layout;
-
     /*Views*/
     RecyclerView recyclerView;
-
     SwipeRefreshLayout swipeRefreshLayout;
 
-    public MainFragment() {
-        // Required empty public constructor
+    public static NotificationFragment getInstance() {
+        if (instance == null) {
+            instance = new NotificationFragment();
+        }
+        return instance;
     }
 
 
@@ -42,15 +43,14 @@ public class MainFragment extends android.support.v4.app.Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        layout = inflater.inflate(R.layout.fragment_main, container, false);
-        swipeRefreshLayout= (SwipeRefreshLayout) layout.findViewById(R.id.main_swipe_layout);
-        recyclerView= (RecyclerView) layout.findViewById(R.id.main_recyclerView);
+        layout = inflater.inflate(R.layout.fragment_notification, container, false);
+        swipeRefreshLayout = (SwipeRefreshLayout) layout.findViewById(R.id.notif_swipe_layout);
+        recyclerView = (RecyclerView) layout.findViewById(R.id.notif_recyclerView);
         init();
 
         return layout;
@@ -58,34 +58,25 @@ public class MainFragment extends android.support.v4.app.Fragment {
 
     private void init() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                super.getItemOffsets(outRect, view, parent, state);
-                outRect.bottom = 10;
-            }
-        });
-        getPosts();
-//        swipeRefreshLayout.setColorSchemeColors();
+        recyclerView.addItemDecoration(new RecycleItemDecoration());
+        getNotification();
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
-                getPosts();
+                getNotification();
             }
         });
     }
 
-    private void getPosts() {
+    private void getNotification() {
         MainActivity.progressBar.setVisibility(View.VISIBLE);
-        Retrofit.getInstance().getPosts(App.userId, new Callback<List<Post>>() {
+        Retrofit.getInstance().getNotification(App.userId, new Callback<List<Notif>>() {
             @Override
-            public void success(List<Post> posts, Response response) {
-                Retrofit.res(posts + "", response);
+            public void success(List<Notif> notif, Response response) {
+                Retrofit.res(notif + "", response);
                 MainActivity.progressBar.setVisibility(View.GONE);
                 swipeRefreshLayout.setRefreshing(false);
-                recyclerView.setAdapter(new PostsRecyclerAdapter(getActivity(), posts));
+                recyclerView.setAdapter(new NotifRecyclerAdapter(getActivity(), notif));
             }
 
             @Override

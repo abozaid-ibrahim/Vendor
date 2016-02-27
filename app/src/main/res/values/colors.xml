@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="button_bg">#ff737363</color>
+    <color name="view_bg_color">#8859295b</color>
     <color name="button_text">#ffffffff</color>
     <color name="circular_image_border_color">#ffeeeeee</color>
     <color name="colorAccent">#ffffffff</color>

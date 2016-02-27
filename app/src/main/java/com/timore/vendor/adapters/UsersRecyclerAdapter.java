@@ -35,26 +35,27 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.titleTv.setText(data.get(position).getUsername());
         holder.dateTv.setText(data.get(position).getDate_insert());
         holder.followBtn.setText(data.get(position).getFollow() == 0 ? context.getString(R.string.follow) : context.getString(R.string.unfollow));
         Image.obj(context).setImage(holder.logoView,data.get(position).getImage(),R.drawable.usericon);
+//        Log.i("image",data.get(position).getImage());
 
         holder.followBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(data.get(position).getFollow()==0) {
-                    UserActions.getInstance(context).followUser(data.get(position).getId());
+                if (data.get(holder.getAdapterPosition()).getFollow() == 0) {
+                    UserActions.getInstance(context).followUser(data.get(holder.getAdapterPosition()).getId());
                     holder.followBtn.setText(context.getString(R.string.unfollow));
-                    data.get(position).setFollow(1);
-                    notifyItemChanged(position);
+                    data.get(holder.getAdapterPosition()).setFollow(1);
+                    notifyItemChanged(holder.getAdapterPosition());
 
                 }else{
-                    UserActions.getInstance(context).unFollowUser(data.get(position).getId());
+                    UserActions.getInstance(context).unFollowUser(data.get(holder.getAdapterPosition()).getId());
                     holder.followBtn.setText(context.getString(R.string.follow));
-                    data.get(position).setFollow(0);
-                    notifyItemChanged(position);
+                    data.get(holder.getAdapterPosition()).setFollow(0);
+                    notifyItemChanged(holder.getAdapterPosition());
                 }
             }
         });
@@ -62,7 +63,7 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.gotoUserProfile(context, data.get(position).getId());
+                Utils.gotoUserProfile(context, data.get(holder.getAdapterPosition()).getId(), data.get(holder.getAdapterPosition()).getUsername());
             }
         });
     }

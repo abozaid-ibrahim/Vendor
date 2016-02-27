@@ -18,8 +18,8 @@ import java.util.List;
  * Created by Abuzeid on 11/27/2015.
  */
 public class PostImagesAdapter extends RecyclerView.Adapter<PostImagesAdapter.ViewHolder> {
+    public List<PostImage> data;
     Context context;
-    List<PostImage> data;
 
     public PostImagesAdapter(Context context, List<PostImage> data) {
         this.context = context;

@@ -1,13 +1,12 @@
 package com.timore.vendor.views;
 
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.timore.vendor.R;
 import com.timore.vendor.control.SuperActivity;
 import com.timore.vendor.control.VAR;
-import com.timore.vendor.views.home.AddPostFragment;
+import com.timore.vendor.home.AddPostFragment;
 
 public class EditPostActivity extends SuperActivity {
 

@@ -1,4 +1,4 @@
-package com.timore.vendor.views.custom;
+package com.timore.vendor.ui;
 
 
 import android.content.Context;

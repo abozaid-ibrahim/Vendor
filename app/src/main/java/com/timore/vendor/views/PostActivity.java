@@ -15,6 +15,7 @@ import com.timore.vendor.adapters.CommentsRecyclerAdapter;
 import com.timore.vendor.beanBojo.Comment;
 import com.timore.vendor.beanBojo.Post;
 import com.timore.vendor.control.App;
+import com.timore.vendor.control.NetworkLoading;
 import com.timore.vendor.control.Retrofit;
 import com.timore.vendor.control.SuperActivity;
 
@@ -22,22 +23,16 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class PostActivity extends SuperActivity implements View.OnClickListener {
     /*Views*/
-    @Bind(R.id.post_recyclerView)
     RecyclerView recyclerView;
 
-    @Bind(R.id.activity_progress)
     ProgressBar progressBar;
-    @Bind(R.id.post_et_comment)
     EditText commentEt;
-    @Bind(R.id.main_layout)
     View main;
 
 
@@ -48,8 +43,10 @@ public class PostActivity extends SuperActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
         super.setToolBar(findViewById(R.id.toolbar), true);
-        ButterKnife.bind(this);
-
+        recyclerView = (RecyclerView) findViewById(R.id.post_recyclerView);
+        progressBar = (ProgressBar) findViewById(R.id.activity_progress);
+        commentEt = (EditText) findViewById(R.id.post_et_comment);
+        main = findViewById(R.id.main_layout);
         init();
         findViewById(R.id.submit_comment).setOnClickListener(this);
 
@@ -58,6 +55,7 @@ public class PostActivity extends SuperActivity implements View.OnClickListener 
 
     private void init() {
         post = Parcels.unwrap(getIntent().getExtras().getParcelable(POST));
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new RecycleItemDecoration());
         getComments();
@@ -71,8 +69,8 @@ public class PostActivity extends SuperActivity implements View.OnClickListener 
                     public void success(List<Comment> comments, Response response) {
                         Retrofit.res(comments + "", response);
                         progressBar.setVisibility(View.GONE);
-                        if (comments != null ) {
-                            recyclerView.setAdapter(new CommentsRecyclerAdapter(PostActivity.this,post, comments));
+                        if (comments != null) {
+                            recyclerView.setAdapter(new CommentsRecyclerAdapter(PostActivity.this, post, comments));
                         } else System.err.println("COMMENTS NLLLLLLLLLLLLLLLLLL");
                     }
 
@@ -92,12 +90,13 @@ public class PostActivity extends SuperActivity implements View.OnClickListener 
     private void sendComment(String comment) {
         App.hideSoftInput(this);
 
-        progressBar.setVisibility(View.VISIBLE);
+        NetworkLoading.startLoading(this);
+
         Retrofit.getInstance().comment(1, App.userId, post.getId(), comment, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject object, Response response) {
                 Retrofit.res(object + "", response);
-                progressBar.setVisibility(View.GONE);
+                NetworkLoading.stopLoading();
                 boolean succ = Integer.valueOf(object.get("id").toString()) > 0;
                 if (succ) {
                     commentEt.setText("");
@@ -110,7 +109,7 @@ public class PostActivity extends SuperActivity implements View.OnClickListener 
             @Override
             public void failure(RetrofitError error) {
                 Retrofit.failure(error);
-                progressBar.setVisibility(View.GONE);
+                NetworkLoading.stopLoading();
                 if (!App.isConnected(PostActivity.this))
                     Snackbar.make(main, getString(R.string.no_net), Snackbar.LENGTH_LONG).show();
 
@@ -122,7 +121,6 @@ public class PostActivity extends SuperActivity implements View.OnClickListener 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
 
     }
 

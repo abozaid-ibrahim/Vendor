@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.pkmmte.view.CircularImageView xmlns:android="http://schemas.android.com/apk/res/android"
-                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                   android:layout_width="250.0dip"
-                                   android:layout_height="250.0dip"
-                                   app:border="true"
-                                   app:border_color="#ffffffff"
-                                   app:border_width="4.0dip"
-                                   app:shadow="true"/>
+<com.pkmmte.view.CircularImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:src="@drawable/logomin"
+    app:border="true"
+    app:border_color="#ffffffff"
+    app:border_width="2.0dip"
+    app:shadow="true"/>

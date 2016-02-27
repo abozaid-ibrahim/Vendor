@@ -22,38 +22,6 @@ public class App extends Application {
 
     public static int userId;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        initial();
-        setAppFont();
-        //   Typeface xx=Typeface.createFromAsset(getAssets(),"");
-    }
-
-    private void initial() {
-        userId = getSharedPreferences(VAR.PREF_NAME, 0).getInt(VAR.KEY_USER_ID, 0);
-    }
-
-    private void setAppFont() {
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/blippo.ttf");
-        replaceFont("MONOSPACE", typeface);
-        replaceFont("DEFAULT", typeface);
-        replaceFont("SERIF", typeface);
-        replaceFont("SANS_SERIF", typeface);
-    }
-
-    private void replaceFont(String s, Typeface font) {
-        try {
-            Field field = Typeface.class.getDeclaredField(s);
-            field.setAccessible(true);
-            field.set(null, font);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void print(String s) {
         System.err.println("==========================================");
         System.err.println("==========================================");
@@ -85,6 +53,38 @@ public class App extends Application {
                 e.printStackTrace();
                 Toast.makeText(context,context.getString(R.string.checkLink), Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        initial();
+        setAppFont();
+        //   Typeface xx=Typeface.createFromAsset(getAssets(),"");
+    }
+
+    private void initial() {
+        App.userId = getSharedPreferences(VAR.PREF_NAME, 0).getInt(VAR.KEY_USER_ID, 0);
+    }
+
+    private void setAppFont() {
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/blippo.ttf");
+        replaceFont("MONOSPACE", typeface);
+        replaceFont("DEFAULT", typeface);
+        replaceFont("SERIF", typeface);
+        replaceFont("SANS_SERIF", typeface);
+    }
+
+    private void replaceFont(String s, Typeface font) {
+        try {
+            Field field = Typeface.class.getDeclaredField(s);
+            field.setAccessible(true);
+            field.set(null, font);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
     }
 }

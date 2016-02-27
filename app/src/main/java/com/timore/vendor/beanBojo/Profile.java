@@ -2,11 +2,13 @@ package com.timore.vendor.beanBojo;
 
 import org.parceler.Parcel;
 
+import java.io.Serializable;
+
 /**
  * Created by usear on 11/29/2015.
  */
 @Parcel
-public class Profile {
+public class Profile implements Serializable {
 
     long id;
     String username, mobile, email, image,

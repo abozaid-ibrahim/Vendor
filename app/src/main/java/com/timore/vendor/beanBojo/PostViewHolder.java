@@ -12,9 +12,10 @@ import com.timore.vendor.R;
  * Created by usear on 12/1/2015.
  */
 public class PostViewHolder extends RecyclerView.ViewHolder {
+    public TextView subjectTv;
     public View menuDelete;
     public View menuEdit;
-    public TextView titleTv;
+    public TextView userNameTv;
     public TextView contentTv;
     public TextView dateTv;
     public ImageView logoView;
@@ -27,7 +28,8 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
 
     public PostViewHolder(View itemView) {
         super(itemView);
-        titleTv = (TextView) itemView.findViewById(R.id.main_row_name);
+        userNameTv = (TextView) itemView.findViewById(R.id.main_row_name);
+        subjectTv = (TextView) itemView.findViewById(R.id.main_row_title);
         contentTv = (TextView) itemView.findViewById(R.id.main_row_content);
         dateTv = (TextView) itemView.findViewById(R.id.main_row_date);
         logoView = (ImageView) itemView.findViewById(R.id.main_row_logo);

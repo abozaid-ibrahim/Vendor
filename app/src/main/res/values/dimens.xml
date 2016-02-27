@@ -9,4 +9,6 @@
     <dimen name="post_rv_item_menu_height">90dp</dimen>
     <dimen name="toolbar_logo_margin">25dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="post_images_view_height">144dp</dimen>
+    <dimen name="post_images_view_width">180dp</dimen>
 </resources>

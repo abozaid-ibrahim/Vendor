@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.timore.vendor.R;
 import com.timore.vendor.beanBojo.Notif;
-import com.timore.vendor.control.Utils;
 
 import java.util.List;
 
@@ -32,19 +31,19 @@ public class NotifRecyclerAdapter extends RecyclerView.Adapter<NotifRecyclerAdap
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.titleTv.setText(data.get(position).getPost());
 //        holder.dateTv.setText(data.get(position).getPost());
         holder.dateTv.setText(data.get(position).getContent());
 //
 
 
-        holder.view.setOnClickListener(new View.OnClickListener() {
+        /*holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              Utils.gotoUserProfile(context,data.get(position).getParent());
+                Utils.gotoUserProfile(context, data.get(holder.getAdapterPosition()).getParent(), data.get(holder.getAdapterPosition()).getPost());
             }
-        });
+        });*/
     }
 
     @Override

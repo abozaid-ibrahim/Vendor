@@ -1,18 +1,17 @@
 package com.timore.vendor.views;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.Snackbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
@@ -22,6 +21,7 @@ import com.timore.vendor.control.App;
 import com.timore.vendor.control.CameraImage;
 import com.timore.vendor.control.GPSTracker;
 import com.timore.vendor.control.Image;
+import com.timore.vendor.control.NetworkLoading;
 import com.timore.vendor.control.Retrofit;
 import com.timore.vendor.control.SuperActivity;
 import com.timore.vendor.control.Utils;
@@ -31,8 +31,6 @@ import org.parceler.Parcels;
 
 import java.io.File;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -40,64 +38,64 @@ import retrofit.client.Response;
 public class EditProfileActivity extends SuperActivity implements View.OnClickListener {
     /*Views*/
 
-    @Bind(R.id.activity_progress)
-    ProgressBar progressBar;
-    @Bind(R.id.edit_btn_uploadimage)
+    final String KEY_IMAGE_PATH = "FILEPATH`";
     Button profileImgBtn;
     ImageView profileImageView;
-
-    @Bind(R.id.edit_et_about)
     EditText aboutEt;
-    @Bind(R.id.edit_et_email)
     EditText emailEt;
-    @Bind(R.id.edit_et_facebook)
     EditText fbEt;
-    @Bind(R.id.edit_et_hashtag)
     EditText hashtagEt;
-    @Bind(R.id.edit_et_instagram)
     EditText instagramEt;
-    @Bind(R.id.edit_et_website)
     EditText websiteEt;
-    @Bind(R.id.edit_et_mobile)
     EditText mobileEt;
-    @Bind(R.id.edit_et_twitter)
     EditText twitterEt;
-    @Bind(R.id.edit_et_username)
     EditText usernameEt;
-    @Bind(R.id.edit_btn_update)
     Button submit;
-    @Bind(R.id.edit_btn_password)
     Button passBtn;
-
-
-    @Bind(R.id.main_layout)
     View main;
     Profile profile;
-    private GPSTracker gps;
     double lat = 0, longitude = 0;
     private boolean imageChanged;
+    private Bitmap uploadedBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         super.setToolBar(findViewById(R.id.toolbar), true);
-        ButterKnife.bind(this);
-        imageChanged = false;
-        profileImageView = (ImageView) findViewById(R.id.edit_porfile_image);
+        findViewById();
         init();
-        gps = new GPSTracker(this);
+
+    }
+
+    public void findViewById() {
+        profileImgBtn = (Button) findViewById(R.id.edit_btn_uploadimage);
+        main = findViewById(R.id.main_layout);
+        passBtn = (Button) findViewById(R.id.edit_btn_password);
+        submit = (Button) findViewById(R.id.edit_btn_update);
+        usernameEt = (EditText) findViewById(R.id.edit_et_username);
+        twitterEt = (EditText) findViewById(R.id.edit_et_twitter);
+        mobileEt = (EditText) findViewById(R.id.edit_et_mobile);
+        aboutEt = (EditText) findViewById(R.id.edit_et_about);
+
+        emailEt = (EditText) findViewById(R.id.edit_et_email);
+        fbEt = (EditText) findViewById(R.id.edit_et_facebook);
+        hashtagEt = (EditText) findViewById(R.id.edit_et_hashtag);
+        instagramEt = (EditText) findViewById(R.id.edit_et_instagram);
+        websiteEt = (EditText) findViewById(R.id.edit_et_website);
+        profileImageView = (ImageView) findViewById(R.id.edit_porfile_image);
+
+    }
+
+    private void init() {
+        GPSTracker gps = new GPSTracker(this);
         if (gps.canGetLocation()) {
             lat = gps.getLatitude();
             longitude = gps.getLongitude();
         } else {
             gps.showSettingsAlert();
         }
-        enableViews(false);
-    }
-
-
-    private void init() {
+//        enableViews(true);
         profile = Parcels.unwrap(getIntent().getExtras().getParcelable(SuperActivity.PROFILE));
         if (profile != null) {
             usernameEt.setText(profile.getUsername());
@@ -107,7 +105,7 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
             instagramEt.setText(profile.getInstagram());
             twitterEt.setText(profile.getTwitter());
             fbEt.setText(profile.getFacebook());
-            System.err.println("prof image>>>>>>" + profile.getImage());
+            Log.i("editprofile", "prof image >> " + profile.getImage());
             if (profile.getImage() != null && profile.getImage().length() > 4)
                 Image.obj(this).setImage(profileImageView, profile.getImage());
         }
@@ -118,39 +116,36 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
     }
 
     public void uploadImage() {
-        progressBar.setVisibility(View.VISIBLE);
+        NetworkLoading.startLoading(this);
 
-        Retrofit.getInstance().uploadImage(Utils.bitMapToString(CameraImage.photoFile.getAbsolutePath()), new Callback<JsonObject>() {
-            @Override
-            public void success(JsonObject object, Response response) {
-                Retrofit.res(object + "", response);
-                if (object != null) {
-                    updateProfile(object.get("img_name").getAsString());
-                } else {
-                    if (!App.isConnected(EditProfileActivity.this))
-                        Snackbar.make(main, getString(R.string.no_net), Snackbar.LENGTH_LONG).show();
-                    progressBar.setVisibility(View.GONE);
-                }
-            }
 
-            @Override
-            public void failure(RetrofitError error) {
-                Retrofit.failure(error);
-                if (!App.isConnected(EditProfileActivity.this))
-                    Snackbar.make(main, getString(R.string.no_net), Snackbar.LENGTH_LONG).show();
-                progressBar.setVisibility(View.GONE);
+        Retrofit.getInstance().uploadImage(
+                Utils.bitMapToString(uploadedBitmap),
+                new Callback<JsonObject>() {
+                    @Override
+                    public void success(JsonObject object, Response response) {
+                        if (object != null) {
+                            updateProfile(object.get("img_name").getAsString());
+                        } else {
+                            if (!App.isConnected(EditProfileActivity.this))
+                                Snackbar.make(main, getString(R.string.no_net), Snackbar.LENGTH_LONG).show();
+                            NetworkLoading.stopLoading();
+                        }
+                    }
 
-            }
-        });
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Retrofit.failure(error);
+                        if (!App.isConnected(EditProfileActivity.this))
+                            Snackbar.make(main, getString(R.string.no_net), Snackbar.LENGTH_LONG).show();
+                        NetworkLoading.stopLoading();
+                    }
+                });
     }
-
-
-    final String KEY_IMAGE_PATH = "FILEPATH";
 
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
-        System.err.println("===========onSaveInstanceState===========================");
         if (CameraImage.photoFile != null)
             outState.putString(KEY_IMAGE_PATH, CameraImage.photoFile.getAbsolutePath());
 
@@ -159,13 +154,12 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        System.err.println("===========onRestoreInstanceState===========================");
         try {
-            if (savedInstanceState.containsKey(KEY_IMAGE_PATH)) {
-                if (savedInstanceState.getString(KEY_IMAGE_PATH) != null)
-                    CameraImage.photoFile = new File(savedInstanceState.getString(KEY_IMAGE_PATH));
-                System.err.println("===========onRestoreInstanceState===========================" + CameraImage.photoFile.getAbsolutePath());
-            }
+            if (savedInstanceState != null)
+                if (savedInstanceState.containsKey(KEY_IMAGE_PATH)) {
+                    if (savedInstanceState.getString(KEY_IMAGE_PATH) != null)
+                        CameraImage.photoFile = new File(savedInstanceState.getString(KEY_IMAGE_PATH));
+                }
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -173,7 +167,6 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
 
 
     private void updateProfile(String imgName) {
-        System.err.println("IMAGE NAME: " + imgName);
         Retrofit.getInstance().updateAccount(1, usernameEt.getText().toString(),
                 mobileEt.getText().toString(), imgName
                 , App.userId, aboutEt.getText().toString()
@@ -185,13 +178,13 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
                     @Override
                     public void success(JsonObject res, Response response) {
                         Retrofit.res(res + "", response);
-                        progressBar.setVisibility(View.GONE);
+                        NetworkLoading.stopLoading();
                         String val = res.get("sucess").toString();
                         if (Integer.valueOf(val) > 0) {
-                            Toast.makeText(EditProfileActivity.this, "Account updated", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditProfileActivity.this, getString(R.string.account_updated), Toast.LENGTH_SHORT).show();
                             finish();
                         } else {
-                            Toast.makeText(EditProfileActivity.this, "Can't save updates", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditProfileActivity.this, getString(R.string.cant_update_account), Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -199,7 +192,7 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
                     @Override
                     public void failure(RetrofitError error) {
                         Retrofit.failure(error);
-                        progressBar.setVisibility(View.GONE);
+                        NetworkLoading.stopLoading();
                         if (!App.isConnected(EditProfileActivity.this))
                             Snackbar.make(main, getString(R.string.no_net), Snackbar.LENGTH_LONG).show();
 
@@ -212,7 +205,7 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
         CameraImage.photoFile = null;
 
         super.onDestroy();
-        ButterKnife.unbind(this);
+
 
     }
 
@@ -221,9 +214,12 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
         switch (v.getId()) {
             case R.id.edit_btn_update:
                 if (validInputs()) {
-                    if (imageChanged)
+                    if (imageChanged) {
+                        Log.i("editprofile", "update profile image");
                         uploadImage();
-                    else updateProfile(null);
+                    } else {
+                        updateProfile(null);
+                    }
 
                 } else
                     Snackbar.make(v, getString(R.string.checkInputs), Snackbar.LENGTH_LONG).show();
@@ -258,45 +254,45 @@ public class EditProfileActivity extends SuperActivity implements View.OnClickLi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.err.println("ON ACTIVITY RESULT");
         if (resultCode == RESULT_OK) {
-            System.err.println("ON ACTIVITY RESULT RESULT_OK");
             imageChanged = true;
             if (requestCode == VAR.PICK_IAMGE) {
-                System.err.println("ON ACTIVITY RESULT PICK_IAMGE");
                 Uri selectedImage = data.getData();
-                profileImageView.setImageURI(selectedImage);
-                CameraImage.getImageFile(getBaseContext(), data);
-                System.err.println("ON ACTIVITY RESULT done");
-//                profileImageView.setImageResource(R.drawable.logo_2);
+                uploadedBitmap = CameraImage.bitmapFromUri(EditProfileActivity.this, data);
+                profileImageView.setImageBitmap(uploadedBitmap);
+//                profileImageView.setImageURI(selectedImage);
 
             } else if (requestCode == VAR.OPEN_CAMERA) {
-                profileImageView.setImageBitmap(BitmapFactory.decodeFile(CameraImage.photoFile.getAbsolutePath()));
+                uploadedBitmap = BitmapFactory.decodeFile(CameraImage.photoFile.getAbsolutePath());
+                profileImageView.setImageBitmap(uploadedBitmap);
             }
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_edit_post, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+    /*
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        super.onOptionsItemSelected(item);
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            case R.id.action_edit:
-                enableViews(true);
-                return true;
-            default:
-                return false;
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
+            getMenuInflater().inflate(R.menu.menu_edit_post, menu);
+            return super.onCreateOptionsMenu(menu);
         }
-    }
 
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            super.onOptionsItemSelected(item);
+            switch (item.getItemId()) {
+                case android.R.id.home:
+                    finish();
+                    return true;
+                case R.id.action_edit:
+                    enableViews(true);
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+    */
     private void enableViews(boolean enable) {
 
         main.setAlpha(enable ? 1 : 0.3f);

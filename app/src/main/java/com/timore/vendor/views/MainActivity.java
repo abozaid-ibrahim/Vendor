@@ -11,38 +11,37 @@ import com.timore.vendor.R;
 import com.timore.vendor.adapters.MainViewPagerAdapter;
 import com.timore.vendor.beanBojo.MainTab;
 import com.timore.vendor.control.App;
-import com.timore.vendor.views.home.AddPostFragment;
-import com.timore.vendor.views.home.MainFragment;
-import com.timore.vendor.views.home.NotificationFragment;
-import com.timore.vendor.views.home.ProfileFragment;
-import com.timore.vendor.views.home.SearchFragment;
+import com.timore.vendor.home.AddPostFragment;
+import com.timore.vendor.home.MainFragment;
+import com.timore.vendor.home.NotificationFragment;
+import com.timore.vendor.home.ProfileFragment;
+import com.timore.vendor.home.SearchFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 public class MainActivity extends AppCompatActivity {
 
     public static ProgressBar progressBar;
-    @Bind(R.id.tabLayout)
+    private static NotificationFragment instance;
     TabLayout tabLayout;
-    @Bind(R.id.container)
     ViewPager mViewPager;
     List<MainTab> mFragmentList;
-    private AddPostFragment addPostFragment;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
+    public static NotificationFragment getInstance() {
+        if (instance == null) {
+            instance = new NotificationFragment();
+        }
+        return instance;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
         mFragmentList = new ArrayList<>();
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        mViewPager = (ViewPager) findViewById(R.id.container);
         progressBar = (ProgressBar) findViewById(R.id.activity_progress);
         setupViewPager(mViewPager);
 
@@ -52,25 +51,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
 
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        addPostFragment = new AddPostFragment();
-        mFragmentList.add(new MainTab(ProfileFragment.getInstance(App.userId, true), 0, "", R.drawable.profile));
-        mFragmentList.add(new MainTab(new NotificationFragment(), 1, "", R.drawable.notification));
+        mFragmentList.add(new MainTab(ProfileFragment.getInstance(App.userId, null, true), 0, "", R.drawable.profile));
+        mFragmentList.add(new MainTab(NotificationFragment.getInstance(), 1, "", R.drawable.notification));
 
-        mFragmentList.add(new MainTab(addPostFragment, 2, "", R.drawable.gallery));
-        mFragmentList.add(new MainTab(new SearchFragment(), 3, "", R.drawable.search));
-        mFragmentList.add(new MainTab(new MainFragment(), 4, "", R.drawable.home));
+        mFragmentList.add(new MainTab(AddPostFragment.getInstance(), 2, "", R.drawable.gallery));
+        mFragmentList.add(new MainTab(SearchFragment.getInstance(), 3, "", R.drawable.search));
+        mFragmentList.add(new MainTab(MainFragment.getInstance(), 4, "", R.drawable.home));
         PagerAdapter adapter = new MainViewPagerAdapter(getSupportFragmentManager(), mFragmentList);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
         for (int i = 0; i < mFragmentList.size(); i++) {
-            tabLayout.getTabAt(i).setIcon(mFragmentList.get(i).getIcon());
+            TabLayout.Tab xx = tabLayout.getTabAt(i);
+            assert xx != null;
+            xx.setIcon(mFragmentList.get(i).getIcon());
         }
 
         viewPager.setCurrentItem(4);

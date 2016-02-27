@@ -1,4 +1,4 @@
-package com.timore.vendor.views.home;
+package com.timore.vendor.home;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -29,16 +29,18 @@ import retrofit.client.Response;
 
 
 public class SearchFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
+    private static SearchFragment instance;
     View layout;
-
     /*Views*/
     RecyclerView recyclerView;
-
     Button submitSeach;
     EditText searchEt;
 
-    public SearchFragment() {
-        // Required empty public constructor
+    public static SearchFragment getInstance() {
+        if (instance == null) {
+            instance = new SearchFragment();
+        }
+        return instance;
     }
 
 
@@ -76,13 +78,23 @@ public class SearchFragment extends android.support.v4.app.Fragment implements V
 
     private void getUsers() {
         MainActivity.progressBar.setVisibility(View.VISIBLE);
-        Retrofit.getInstance().getAllUsers(new Callback<List<User>>() {
+        Retrofit.getInstance().getAllUsers(App.userId, new Callback<List<User>>() {
             @Override
             public void success(List<User> users, Response response) {
                 Retrofit.res(users + "", response);
                 MainActivity.progressBar.setVisibility(View.GONE);
-                if (users != null)
+                if (users != null) {
+                    User me = null;
+                    for (User usr : users) {
+                        if (usr.getId() == App.userId) {
+                            me = usr;
+                            break;
+                        }
+                    }
+                    if (me != null)
+                        users.remove(me);
                     recyclerView.setAdapter(new UsersRecyclerAdapter(getActivity(), users));
+                }
             }
 
             @Override
@@ -98,7 +110,7 @@ public class SearchFragment extends android.support.v4.app.Fragment implements V
 
     private void search(String username) {
         MainActivity.progressBar.setVisibility(View.VISIBLE);
-        Retrofit.getInstance().searchInUsers(username, "", "", "", new Callback<List<User>>() {
+        Retrofit.getInstance().searchInUsers(App.userId, username, "", "", "", new Callback<List<User>>() {
             @Override
             public void success(List<User> users, Response response) {
                 Retrofit.res(users + "", response);

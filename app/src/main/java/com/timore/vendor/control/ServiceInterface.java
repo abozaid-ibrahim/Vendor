@@ -14,7 +14,6 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
-import retrofit.http.GET;
 import retrofit.http.POST;
 
 /**
@@ -49,7 +48,7 @@ public interface ServiceInterface {
 
     @FormUrlEncoded
     @POST("/users/account")
-    void getAccountData(@Field("id") long id, Callback<User> cb);
+    void getAccountData(@Field("id") long id, @Field("user_id") long user_id, Callback<User> cb);
 
     @FormUrlEncoded
     @POST("/users/password")
@@ -59,22 +58,17 @@ public interface ServiceInterface {
 
     @FormUrlEncoded
     @POST("/users/search")
-    void searchInUsers(@Field("username") String username, @Field("mobile") String mobile,
+    void searchInUsers(@Field("user_id") long user_id, @Field("username") String username, @Field("mobile") String mobile,
                        @Field("hashtag") String hashtag, @Field("email") String email, Callback<List<User>> cb);
-
-
-    @FormUrlEncoded
-    @POST("/users/search")
-    void searchInUser(@Field("username") String username, @Field("mobile") String mobile,
-                      @Field("hashtag") String hashtag, @Field("email") String email, Callback<JsonArray> cb);
 
     @FormUrlEncoded
     @POST("/users/forget_password")
     void forgetPass(@Field("rocsel") long rocs, @Field("email") String email, Callback<JsonObject> cb);
 
 
-    @GET("/users/get")
-    void getAllUsers(Callback<List<User>> callback);
+    @FormUrlEncoded
+    @POST("/users/get")
+    void getAllUsers(@Field("user_id") long user_id, Callback<List<User>> callback);
 
 
     /* POSTS */
@@ -97,7 +91,7 @@ public interface ServiceInterface {
 
     @FormUrlEncoded
     @POST("/posts/update")
-    void updatePost(@Field("rocsel") int one, @Field("id") long id,@Field("user_id") long uid, @Field("title") String title
+    void updatePost(@Field("rocsel") int one, @Field("id") long id, @Field("user_id") long uid, @Field("title") String title
             , @Field("file") String file, @Field("content") String content, Callback<JsonObject> cb);
 
     @FormUrlEncoded
@@ -198,16 +192,10 @@ public interface ServiceInterface {
     /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
 
 
-   @FormUrlEncoded
-    @POST("/profile/get")
-    void getUserProfile(@Field("user_id") long userId, Callback<Profile> cb);@FormUrlEncoded
-
-    @POST("/profile/get")
-    void getUserProfileTest(@Field("user_id") long userId, Callback<JsonObject> cb);
-/*
     @FormUrlEncoded
     @POST("/profile/get")
-    void getUserProfile(@Field("user_id") long userId, Callback<JsonObject> cb);*/
+    void getUserProfile(@Field("user_id") long userid, @Field("user") long myid, Callback<Profile> cb);
+
 
     @FormUrlEncoded
     @POST("/profile/posts")
@@ -219,8 +207,9 @@ public interface ServiceInterface {
     @POST("/notification/report")
     void reportPost(@Field("rocsel") long rocsel, @Field("user_id") long userId, @Field("parent") long parent,
                     @Field("content") String content, Callback<JsonObject> cb);
-@FormUrlEncoded
+
+    @FormUrlEncoded
     @POST("/upload")
-    void uploadImage( @Field("image") String image,Callback<JsonObject> cb);
+    void uploadImage(@Field("image") String image, Callback<JsonObject> cb);
 
 }

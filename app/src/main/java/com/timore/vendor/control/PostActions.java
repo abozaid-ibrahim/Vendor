@@ -29,14 +29,14 @@ import retrofit.client.Response;
  */
 public class PostActions {
     public static void setData(final PostsRecyclerAdapter adapter, final Context context, final PostViewHolder holder, final Post post, final int position) {
-        holder.titleTv.setText(post.getTitle());
+        holder.userNameTv.setText(post.getUsername());
+        holder.subjectTv.setText(post.getTitle());
         holder.contentTv.setText(post.getContent());
         holder.dateTv.setText(post.getDate_insert());
         holder.menuEdit.setVisibility(post.getUser_id() == App.userId ? View.VISIBLE : View.GONE);
         holder.menuDelete.setVisibility(post.getUser_id() == App.userId ? View.VISIBLE : View.GONE);
         Image.obj(context).setImage(holder.imageView, post.getFile(), R.drawable.logomin_trans);
         Image.obj(context).setImage(holder.logoView, post.getUser_image(), R.drawable.usericon);
-//        Glide.with(context).load(VAR.IMAGE_URL+post.getUser_image()).into(holder.logoView);
         holder.likeBtn.setImageResource(post.getLike() == 1 ? R.drawable.liked : R.drawable.like);
         holder.likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,8 +100,6 @@ public class PostActions {
 
                 Intent postIntent = new Intent(context, FullScreenImageActivity.class);
                 postIntent.putExtra(VAR.KEY_URL, post.getFile());
-                System.err.println("IMAGE" + post.getFile());
-                System.err.println("logo" + post.getUser_image());
                 context.startActivity(postIntent);
 
             }
@@ -109,7 +107,7 @@ public class PostActions {
         holder.logoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.gotoUserProfile(context, post.getId());
+                Utils.gotoUserProfile(context, post.getUser_id(), post.getUsername());
 
             }
         });
@@ -197,7 +195,7 @@ public class PostActions {
         holder.logoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.gotoUserProfile(context, post.getId());
+                Utils.gotoUserProfile(context, post.getId(), post.getUsername());
 
             }
         });

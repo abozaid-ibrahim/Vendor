@@ -1,15 +1,14 @@
 package com.timore.vendor.control;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.timore.vendor.R;
 
 /**
  * Created by usear on 11/30/2015.
@@ -29,19 +28,31 @@ public class Image {
     }
 
     public void setImage(ImageView image, String url) {
-        System.err.println("IMAGE URL "+VAR.IMAGE_URL+url);
+        System.err.println("IMAGE URL " + VAR.IMAGE_URL + url);
 
         Picasso.with(context).load(VAR.IMAGE_URL + url).into(image);
 //        Glide.with(context).load(VAR.IMAGE_URL+url).into(image);
     }
 
     public void setImage(ImageView image, String url, int err) {
-        System.err.println("IMAGE URL "+VAR.IMAGE_URL+url);
         try {
-            Picasso.with(context).load(VAR.IMAGE_URL + url).error(err).into(image);
+            if (url == null) {
+                image.setImageResource(err);
+
+            } else if (url.isEmpty() || url.equals("null")) {
+                image.setImageResource(err);
+            } else {
+
+                Log.i("IMAGE", VAR.IMAGE_URL + url);
+                int radius = image.getHeight() / 2, margin = 5;
+                Picasso.with(context).load(VAR.IMAGE_URL + url).transform(new RoundedTransformation(radius, margin)).into(image);
+
+//                Picasso.with(context).load(VAR.IMAGE_URL + url).error(err).into(image);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
-            Picasso.with(context).load(VAR.IMAGE_URL + url).into(image);
+            image.setImageResource(err);
 
         }
 
@@ -49,24 +60,20 @@ public class Image {
     }
 
     public void setImage(final ImageView image, String url, final ProgressBar progressBar) {
-        System.err.println("IMAGE URL "+VAR.IMAGE_URL+url);
-
-        Glide.with(context).load(VAR.IMAGE_URL+url).listener(new RequestListener<String, GlideDrawable>() {
+        System.err.println("IMAGE URL " + VAR.IMAGE_URL + url);
+        Picasso.with(context).load(VAR.IMAGE_URL + url).into(image, new Callback() {
             @Override
-            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                System.err.println("GLIDE>>>>>>onException");
-
-                return false;
-            }
-
-            @Override
-            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                System.err.println("GLIDE>>>>>>onResourceReady");
-//                image.setImageDrawable(resource);
+            public void onSuccess() {
                 progressBar.setVisibility(View.GONE);
-                return false;
+
             }
-        }).into(image);
+
+            @Override
+            public void onError() {
+                image.setImageResource(R.drawable.logomin);
+                progressBar.setVisibility(View.GONE);
+            }
+        });
     }
 
 }

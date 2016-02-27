@@ -1,4 +1,4 @@
-package com.timore.vendor.views.home;
+package com.timore.vendor.home;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.JsonObject;
 import com.timore.vendor.R;
 import com.timore.vendor.adapters.PostsGridAdapter;
 import com.timore.vendor.adapters.PostsRecyclerAdapter;
@@ -38,8 +38,6 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -48,50 +46,34 @@ import retrofit.client.Response;
 public class ProfileFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
     private static ProfileFragment instance;
     View layout;
-    @Bind(R.id.profile_edit)
     Button editProfile;
-
     /*Views*/
-    @Bind(R.id.profile_instagram)
-    ImageView instagramView;
-    @Bind(R.id.profile_facebook)
-    ImageView faceView;
-    @Bind(R.id.profile_iv)
-    ImageView profileImage;
-    @Bind(R.id.profile_iv_twitter)
-    ImageView twitterView;
-    @Bind(R.id.profile_listIcon)
-    ImageView listView;
-    @Bind(R.id.profile_map)
-    ImageView mapIcon;
-    @Bind(R.id.profile_grid_icon)
-    ImageView gridIcon;
-    @Bind(R.id.profile_tv_followersNum)
-    TextView followersTv;
-    @Bind(R.id.profile_tv_followingNum)
-    TextView followingTv;
-    @Bind(R.id.profile_tv_name)
-    TextView nameTv;
-    @Bind(R.id.profile_tv_imagesNum)
-    TextView imagesTv;
-    @Bind(R.id.profile_gird)
-    GridView gridView;
-    @Bind(R.id.profile_recyclerView)
-    RecyclerView recyclerView;
-    Profile profile;
+    private ImageView instagramView;
+    private ImageView faceView;
+    private ImageView profileImage;
+    private ImageView twitterView;
+    private ImageView listView;
+    private ImageView mapIcon;
+    private ImageView gridIcon;
+    private TextView followersTv;
+    private TextView followingTv;
+    private TextView nameTv;
+    private TextView imagesTv;
+    private GridView gridView;
+    private RecyclerView recyclerView;
+    private Profile profile;
     private long userId;
     private boolean isMyProfile;
     private Button logoutButton;
+    private TextView aboutTv;
 
-    public ProfileFragment() {
-    }
-
-    public static ProfileFragment getInstance(long id, boolean isMyProfile) {
+    public static ProfileFragment getInstance(long id, String userName, boolean isMyProfile) {
 //        if (instance == null) {
         instance = new ProfileFragment();
 //        }
         Bundle bundle = new Bundle();
         bundle.putLong(VAR.KEY_USER_ID, id);
+        bundle.putString(VAR.KEY_USER_NAME, userName);
         bundle.putBoolean(VAR.KEY_IS_MY_PROFILE, isMyProfile);
         instance.setArguments(bundle);
         return instance;
@@ -101,21 +83,56 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         userId = getArguments().getLong(VAR.KEY_USER_ID);
-
+        String userName = getArguments().getString(VAR.KEY_USER_NAME);
+        if (userName != null)
+            getActivity().setTitle(userName);
         isMyProfile = getArguments().getBoolean(VAR.KEY_IS_MY_PROFILE);
+        if (userId != App.userId)
+            isMyProfile = false;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         layout = inflater.inflate(R.layout.fragment_profile, container, false);
-        ButterKnife.bind(this, layout);
+
+        findViewById();
         init();
 
         return layout;
     }
+
+    private void findViewById() {
+        aboutTv = (TextView) layout.findViewById(R.id.profile_tv_about);
+        followersTv = (TextView) layout.findViewById(R.id.profile_tv_followersNum);
+        followingTv = (TextView) layout.findViewById(R.id.profile_tv_followingNum);
+        nameTv = (TextView) layout.findViewById(R.id.profile_tv_name);
+        imagesTv = (TextView) layout.findViewById(R.id.profile_tv_imagesNum);
+        gridView = (GridView) layout.findViewById(R.id.profile_gird);
+        recyclerView = (RecyclerView) layout.findViewById(R.id.profile_recyclerView);
+        profileImage = (ImageView) layout.findViewById(R.id.profile_iv);
+
+        editProfile = (Button) layout.findViewById(R.id.profile_edit);
+        gridIcon = (ImageView) layout.findViewById(R.id.profile_grid_icon);
+        instagramView = (ImageView) layout.findViewById(R.id.profile_instagram);
+        faceView = (ImageView) layout.findViewById(R.id.profile_facebook);
+        twitterView = (ImageView) layout.findViewById(R.id.profile_iv_twitter);
+        listView = (ImageView) layout.findViewById(R.id.profile_listIcon);
+        mapIcon = (ImageView) layout.findViewById(R.id.profile_map);
+
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+//        getUser();
+        getUser(userId);
+        getUserPosts(userId);
+
+    }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -135,12 +152,18 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
 
         logoutButton = (Button) layout.findViewById(R.id.profile_logout);
         logoutButton.setOnClickListener(this);
-        logoutButton.setText(isMyProfile ? getString(R.string.logout) : getString(R.string.follow));
-        logoutButton.setText(isMyProfile ? getString(R.string.edit_profile) : getString(R.string.message));
-//        editProfile.setVisibility(isMyProfile ? View.VISIBLE : View.GONE);
-        getUser();
-        getUser(userId);
-        getUserPosts(userId);
+        if (isMyProfile) {
+            Log.i("prof", "this is my profile");
+            logoutButton.setText(getString(R.string.logout));
+            editProfile.setText(getString(R.string.edit_profile));
+            editProfile.setVisibility(View.VISIBLE);
+        } else {
+            logoutButton.setText(getString(R.string.follow));
+//            editProfile.setText( getString(R.string.message));
+            editProfile.setVisibility(View.GONE);
+            Log.i("prof", "this is my profile");
+
+        }
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -153,36 +176,11 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
 
     private void getUser(long userId) {
         MainActivity.progressBar.setVisibility(View.VISIBLE);
-        Retrofit.getInstance().getUserProfile(userId, new Callback<Profile>() {
+        Retrofit.getInstance().getUserProfile(userId, App.userId, new Callback<Profile>() {
             @Override
             public void success(Profile profile, Response response) {
-                Retrofit.res(profile + "", response);
-
                 MainActivity.progressBar.setVisibility(View.GONE);
                 updateUI(profile);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Retrofit.failure(error);
-                MainActivity.progressBar.setVisibility(View.GONE);
-                if (!App.isConnected(getActivity()))
-                    Snackbar.make(layout, getString(R.string.no_net), Snackbar.LENGTH_LONG).show();
-
-            }
-        });
-    }
-
-
-    private void getUser() {
-        MainActivity.progressBar.setVisibility(View.VISIBLE);
-        Retrofit.getInstance().getUserProfileTest(App.userId, new Callback<JsonObject>() {
-            @Override
-            public void success(JsonObject profile, Response response) {
-                Retrofit.res(profile + "", response);
-
-                MainActivity.progressBar.setVisibility(View.GONE);
-//                updateUI(profile);
             }
 
             @Override
@@ -222,15 +220,18 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
         });
     }
 
-    private void updateUI(Profile profil) {
-        if (profil != null) {
-            profile = profil;
+    private void updateUI(Profile myProfile) {
+        if (myProfile != null) {
+            profile = myProfile;
+//            String follow=profile.fo
             logoutButton.setText(isMyProfile ? getString(R.string.logout) : getString(R.string.unfollow));
             followersTv.setText(String.valueOf(profile.getFollowing()));
             followingTv.setText(String.valueOf(profile.getFollower()));
             imagesTv.setText(String.valueOf(profile.getPosts()));
             nameTv.setText(profile.getUsername());
+            aboutTv.setText(profile.getAbout());
             Image.obj(getActivity()).setImage(profileImage, profile.getImage(), R.drawable.usericon);
+
         }
 
     }
@@ -238,7 +239,6 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
 

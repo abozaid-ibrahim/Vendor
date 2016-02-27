@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
@@ -55,21 +56,16 @@ public class CameraImage {
         }
     }
 
-    public static void dispatchTakePictureIntent(Fragment paramFragment) {
-        Intent localIntent = new Intent("android.media.action.IMAGE_CAPTURE");
-        if (localIntent.resolveActivity(paramFragment.getContext().getPackageManager()) != null) {
-        }
+    public static void dispatchTakePictureIntent(Fragment fragment) {
+        Intent imageCapture = new Intent("android.media.action.IMAGE_CAPTURE");
         try {
             photoFile = createImageFile();
             if (photoFile != null) {
-                localIntent.putExtra("output", Uri.fromFile(photoFile));
-                paramFragment.startActivityForResult(localIntent, 132);
+                imageCapture.putExtra("output", Uri.fromFile(photoFile));
+                fragment.startActivityForResult(imageCapture, VAR.PICK_IAMGE);
             }
-            return;
-        } catch (Exception localException) {
-            for (; ; ) {
-                localException.printStackTrace();
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -79,13 +75,25 @@ public class CameraImage {
         paramContext.sendBroadcast(localIntent);
     }
 
-    public static void getImageFile(Context paramContext, Intent paramIntent) {
+    public static Bitmap bitmapFromUri(Context context, Intent data) {
+        try {
+            return MediaStore.Images.Media.getBitmap(context.getContentResolver(), data.getData());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static void getImageFile(Context context, Intent data) {
+
+
         String[] arrayOfString = new String[1];
         arrayOfString[0] = "_data";
-        Cursor cursor = paramContext.getContentResolver().query(paramIntent.getData(), arrayOfString, null, null, null);
+        Cursor cursor = context.getContentResolver().query(data.getData(), arrayOfString, null, null, null);
         assert (cursor != null);
         cursor.moveToFirst();
-        photoFile = new File(paramContext.getString(cursor.getColumnIndex(arrayOfString[0])));
+        photoFile = new File(cursor.getString(cursor.getColumnIndex(arrayOfString[0])));
         cursor.close();
     }
 

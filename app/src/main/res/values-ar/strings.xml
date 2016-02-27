@@ -72,5 +72,12 @@
     <string name="logout_now">خروج الان?</string>
     <string name="cancel">الغاء</string>
     <string name="add_image">اضف صوره</string>
+    <string name="loading">جارى التحميل...</string>
+    <string name="camera">الكاميرا</string>
+    <string name="gallery">معرض الصور</string>
+    <string name="done">تم</string>
+    <string name="cant_post">غير قادر على تحميل المنشور اعدالمحاوله</string>
+    <string name="account_updated">تم تحديث الحساب</string>
+    <string name="cant_update_account">لم يتم حفظ التعديلات </string>
 
 </resources>
