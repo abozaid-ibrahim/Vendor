@@ -75,6 +75,8 @@
     <string name="loading">جارى التحميل...</string>
     <string name="camera">الكاميرا</string>
     <string name="gallery">معرض الصور</string>
+    <string name="upload_image_message">لا يوجد صوره</string>
+
     <string name="done">تم</string>
     <string name="cant_post">غير قادر على تحميل المنشور اعدالمحاوله</string>
     <string name="account_updated">تم تحديث الحساب</string>

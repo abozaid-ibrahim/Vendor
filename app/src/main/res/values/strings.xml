@@ -23,6 +23,7 @@
     <string name="no_net">Check your internet connection</string>
     <string name="search">Search</string>
     <string name="upload_image">upload image</string>
+    <string name="upload_image_message">please upload image</string>
     <string name="Follow">follow</string>
     <string name="add">Add</string>
     <string name="message">Message</string>

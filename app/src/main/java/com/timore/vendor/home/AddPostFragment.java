@@ -254,7 +254,17 @@ public class AddPostFragment extends Fragment implements OnClickListener {
                     if (post != null && post.getId() > 0) {
                         updatePost(v);
                     } else {
-                        uploadPostImage(v, titleEt.getText().toString(), subjectEt.getText().toString(), postImagesArray.get(0).getPath());
+                        String title = titleEt.getText().toString();
+                        String subject = subjectEt.getText().toString();
+                        if (postImagesArray.size() > 0) {
+                            uploadPostImage(v, title, subject,
+                                    postImagesArray.get(0).getPath());
+                        } else {
+                            Snackbar.make(v, getString(R.string.upload_image_message), Snackbar.LENGTH_LONG).show();
+
+
+                        }
+
                     }
                 } else
                     Snackbar.make(v, getString(R.string.checkInputs), Snackbar.LENGTH_LONG).show();

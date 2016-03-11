@@ -38,7 +38,6 @@ public class Image {
         try {
             if (url == null) {
                 image.setImageResource(err);
-
             } else if (url.isEmpty() || url.equals("null")) {
                 image.setImageResource(err);
             } else {
