@@ -155,6 +155,10 @@ public interface ServiceInterface {
     void getUserPosts(@Field("user_id") long userId, @Field("post_id") long post_id, Callback<List<Post>> cb);
 
     @FormUrlEncoded
+    @POST("/profile/is_follow")
+    void is_follow(@Field("user") long currentuser, @Field("user_id") long userid, Callback<JsonObject> cb);
+
+    @FormUrlEncoded
     @POST("/profile/like_count")
     void like_count(@Field("parent") long parent, Callback<List<Post>> cb);
     /*COMMENTS*/
@@ -177,6 +181,13 @@ public interface ServiceInterface {
     @POST("/notification/comment_get")
     void getPostComments(@Field("rocsel") long rocsel, @Field("parent") long parent,
                          Callback<List<Comment>> cb);
+/*
+    @FormUrlEncoded
+
+    @POST("/notification/comment_get")
+    void getPostCommentsT(@Field("rocsel") long rocsel, @Field("parent") long parent,
+                         Callback<JsonArray> cb);
+*/
 
 /*
     @FormUrlEncoded

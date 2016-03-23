@@ -46,8 +46,15 @@ public class MapsActivity extends SuperActivity implements OnMapReadyCallback {
         // Add a marker in Sydney and move the camera
         LatLng sydney;
         if (getIntent().getExtras() != null) {
-            latitude = Double.valueOf(getIntent().getExtras().getString(VAR.LATITUDE, "30"));
-            longitude = Double.valueOf(getIntent().getExtras().getString(VAR.LONGITUDE, "30"));
+            String lat = getIntent().getExtras().getString(VAR.LATITUDE, "");
+            if (lat.isEmpty())
+                lat = "30";
+            latitude = Double.valueOf(lat);
+            String longit = getIntent().getExtras().getString(VAR.LONGITUDE, "");
+            if (longit.isEmpty())
+                longit = "30";
+            longitude = Double.valueOf(longit);
+
             sydney = new LatLng(latitude, longitude);
             mMap.addMarker(new MarkerOptions().position(sydney).title(getIntent().getExtras().getString(VAR.KEY_USER_NAME)));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));

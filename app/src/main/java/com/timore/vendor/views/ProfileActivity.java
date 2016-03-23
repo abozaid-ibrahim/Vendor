@@ -2,6 +2,7 @@ package com.timore.vendor.views;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.timore.vendor.R;
@@ -20,6 +21,8 @@ public class ProfileActivity extends SuperActivity {
         if (getIntent().getExtras() != null) {
             String userName = getIntent().getExtras().getString(VAR.KEY_USER_NAME);
             long userId = getIntent().getExtras().getLong(VAR.KEY_USER_ID);
+            Log.e("user", "post user id " + userId);
+            Log.e("user", "current user id" + App.userId);
             getSupportFragmentManager().beginTransaction().add(R.id.user_container,
                     ProfileFragment.getInstance(userId, userName, App.userId == userId)).commit();
         } else {

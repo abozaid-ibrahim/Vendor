@@ -19,9 +19,10 @@ public class NetworkLoading {
     public static void startLoading(Context context) {
         dialog = new ProgressDialog(context);
         dialog.getWindow().setGravity(Gravity.CENTER);
-        dialog.setCancelable(true);
+        dialog.setCancelable(false);
         dialog.setIndeterminate(false);
         dialog.setProgress(1);
+
         dialog.setMessage(context.getString(R.string.loading));
 
 

@@ -51,7 +51,7 @@ public class CameraImage {
             photoFile = createImageFile();
             if (photoFile != null) {
                 localIntent.putExtra("output", Uri.fromFile(photoFile));
-                paramActivity.startActivityForResult(localIntent, 132);
+                paramActivity.startActivityForResult(localIntent, VAR.OPEN_CAMERA);
             }
         }
     }
@@ -62,7 +62,7 @@ public class CameraImage {
             photoFile = createImageFile();
             if (photoFile != null) {
                 imageCapture.putExtra("output", Uri.fromFile(photoFile));
-                fragment.startActivityForResult(imageCapture, VAR.PICK_IAMGE);
+                fragment.startActivityForResult(imageCapture, VAR.OPEN_CAMERA);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,11 +98,14 @@ public class CameraImage {
     }
 
     public static void openGallery(Activity paramActivity) {
-        paramActivity.startActivityForResult(new Intent("android.intent.action.PICK", MediaStore.Images.Media.EXTERNAL_CONTENT_URI), 13);
+        paramActivity.startActivityForResult(new Intent("android.intent.action.PICK",
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI), VAR.PICK_IAMGE);
     }
 
     public static void openGallery(Fragment paramFragment) {
-        paramFragment.startActivityForResult(new Intent("android.intent.action.PICK", MediaStore.Images.Media.EXTERNAL_CONTENT_URI), 13);
+        paramFragment.startActivityForResult(new Intent("android.intent.action.PICK",
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI),
+                VAR.PICK_IAMGE);
     }
 
     public static void setPic(ImageView paramImageView) {

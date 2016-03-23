@@ -1,7 +1,5 @@
 package com.timore.vendor.control;
 
-import com.timore.vendor.BuildConfig;
-
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 
@@ -22,7 +20,7 @@ public class Retrofit {
 
             RestAdapter restAdapter = new RestAdapter.Builder()
                     .setEndpoint(VAR.SERVER_URL)
-                    .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
+                    .setLogLevel(RestAdapter.LogLevel.FULL)
                     .build();
             //
             searchService = restAdapter.create(ServiceInterface.class);

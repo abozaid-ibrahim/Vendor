@@ -24,17 +24,25 @@
         <TextView
             android:id="@+id/commentItem_title"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="@string/title"
+            android:textColor="#FFF"/>
 
         <TextView
             android:id="@+id/commentItem_content"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="@string/title"
+
+            android:textColor="#FFF"/>
 
         <TextView
             android:id="@+id/commentItem_date"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="@string/title"
+
+            android:textColor="#FFF"/>
     </LinearLayout>
 
     <ImageView

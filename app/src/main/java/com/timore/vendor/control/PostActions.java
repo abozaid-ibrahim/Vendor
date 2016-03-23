@@ -104,13 +104,16 @@ public class PostActions {
 
             }
         });
-        holder.logoView.setOnClickListener(new View.OnClickListener() {
+
+        View.OnClickListener userProfile = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utils.gotoUserProfile(context, post.getUser_id(), post.getUsername());
 
             }
-        });
+        };
+        holder.userNameTv.setOnClickListener(userProfile);
+        holder.logoView.setOnClickListener(userProfile);
     }
 
     private static void switchMenu(Context context, PostViewHolder holder) {
@@ -186,6 +189,7 @@ public class PostActions {
 
     public static void setComments(final CommentsRecyclerAdapter adapter, final Context context, final CommentViewHolder holder, final Comment post, final int position) {
         holder.titleTv.setText(post.getUsername());
+
         holder.contentTv.setText(post.getComment());
         holder.dateTv.setText(post.getDate_insert());
 

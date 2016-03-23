@@ -68,9 +68,12 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_border_grey"
+
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
-                    android:padding="5.0dip"/>
+                    android:maxLines="1"
+                    android:padding="5.0dip"
+                    android:singleLine="true"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -85,7 +88,9 @@
                     android:background="@drawable/rounded_border_grey"
                     android:hint="@string/mobile"
                     android:inputType="phone"
-                    android:padding="5.0dip"/>
+                    android:maxLines="1"
+                    android:padding="5.0dip"
+                    android:singleLine="true"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -113,7 +118,9 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_border_grey"
                     android:hint="@string/facebook"
-                    android:padding="5.0dip"/>
+                    android:maxLines="1"
+                    android:padding="5.0dip"
+                    android:singleLine="true"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -127,7 +134,9 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_border_grey"
                     android:hint="@string/twitter"
-                    android:padding="5.0dip"/>
+                    android:maxLines="1"
+                    android:padding="5.0dip"
+                    android:singleLine="true"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -141,7 +150,9 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_border_grey"
                     android:hint="@string/website"
-                    android:padding="5.0dip"/>
+                    android:maxLines="1"
+                    android:padding="5.0dip"
+                    android:singleLine="true"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -155,7 +166,9 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_border_grey"
                     android:hint="@string/instagram"
-                    android:padding="5.0dip"/>
+                    android:maxLines="1"
+                    android:padding="5.0dip"
+                    android:singleLine="true"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout

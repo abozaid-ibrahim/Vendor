@@ -16,6 +16,16 @@ public class Profile implements Serializable {
             date_insert, likes, comments;
     int follower, following,posts;
 
+    boolean is_follow;
+
+    public boolean is_follow() {
+        return is_follow;
+    }
+
+    public void setIs_follow(boolean is_follow) {
+        this.is_follow = is_follow;
+    }
+
     public long getId() {
         return id;
     }

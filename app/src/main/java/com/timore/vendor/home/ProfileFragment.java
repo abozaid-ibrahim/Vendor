@@ -18,6 +18,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
 import com.timore.vendor.R;
 import com.timore.vendor.adapters.PostsGridAdapter;
 import com.timore.vendor.adapters.PostsRecyclerAdapter;
@@ -25,6 +26,7 @@ import com.timore.vendor.beanBojo.Post;
 import com.timore.vendor.beanBojo.Profile;
 import com.timore.vendor.control.App;
 import com.timore.vendor.control.Image;
+import com.timore.vendor.control.NetworkLoading;
 import com.timore.vendor.control.Retrofit;
 import com.timore.vendor.control.SuperActivity;
 import com.timore.vendor.control.VAR;
@@ -112,6 +114,7 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
         gridView = (GridView) layout.findViewById(R.id.profile_gird);
         recyclerView = (RecyclerView) layout.findViewById(R.id.profile_recyclerView);
         profileImage = (ImageView) layout.findViewById(R.id.profile_iv);
+        logoutButton = (Button) layout.findViewById(R.id.profile_logout);
 
         editProfile = (Button) layout.findViewById(R.id.profile_edit);
         gridIcon = (ImageView) layout.findViewById(R.id.profile_grid_icon);
@@ -150,7 +153,6 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
         gridIcon.setOnClickListener(this);
         mapIcon.setOnClickListener(this);
 
-        logoutButton = (Button) layout.findViewById(R.id.profile_logout);
         logoutButton.setOnClickListener(this);
         if (isMyProfile) {
             Log.i("prof", "this is my profile");
@@ -159,9 +161,8 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
             editProfile.setVisibility(View.VISIBLE);
         } else {
             logoutButton.setText(getString(R.string.follow));
-//            editProfile.setText( getString(R.string.message));
             editProfile.setVisibility(View.GONE);
-            Log.i("prof", "this is my profile");
+            Log.i("prof", "this is NOT my profile");
 
         }
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -224,9 +225,15 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
         if (myProfile != null) {
             profile = myProfile;
 //            String follow=profile.fo
-            logoutButton.setText(isMyProfile ? getString(R.string.logout) : getString(R.string.unfollow));
+            logoutButton.setText(isMyProfile ? getString(R.string.logout) : "");
+            if (!isMyProfile) {
+
+
+                logoutButton.setText(profile.is_follow() ? getString(R.string.unfollow) : getString(R.string.follow));
+            }
             followersTv.setText(String.valueOf(profile.getFollowing()));
             followingTv.setText(String.valueOf(profile.getFollower()));
+            Log.e("client", "posts count " + profile.getPosts());
             imagesTv.setText(String.valueOf(profile.getPosts()));
             nameTv.setText(profile.getUsername());
             aboutTv.setText(profile.getAbout());
@@ -260,6 +267,7 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
                 }
                 break;
             case R.id.profile_logout:
+                Log.e("profile", "logout");
                 if (isMyProfile) {
 
                     AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
@@ -288,6 +296,60 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
 
                 } else {
                     //unfollow
+
+
+                    if (profile.is_follow()) {
+                        NetworkLoading.startLoading(getActivity());
+                        Retrofit.getInstance().followUser(1, App.userId, profile.getId(), new Callback<JsonObject>() {
+                            @Override
+                            public void success(JsonObject jsonObject, Response response) {
+                                NetworkLoading.stopLoading();
+                                logoutButton.setVisibility(View.GONE);
+
+                                logoutButton.setText(getString(R.string.unfollow));
+                                logoutButton.bringToFront();
+                                profile.setIs_follow(true);
+//                                logoutButton.setVisibility(View.VISIBLE);
+
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                                NetworkLoading.stopLoading();
+
+                                if (!App.isConnected(getActivity()))
+                                    Snackbar.make(layout, getString(R.string.no_net), Snackbar.LENGTH_LONG).show();
+
+                            }
+                        });
+
+                    } else {
+                        NetworkLoading.startLoading(getActivity());
+
+                        Retrofit.getInstance().unFollowUser(App.userId, profile.getId(), new Callback<JsonObject>() {
+                            @Override
+                            public void success(JsonObject jsonObject, Response response) {
+                                logoutButton.setVisibility(View.GONE);
+
+                                logoutButton.setText(getString(R.string.follow));
+                                profile.setIs_follow(false);
+//                                logoutButton.setVisibility(View.VISIBLE);
+
+                                NetworkLoading.stopLoading();
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                                NetworkLoading.stopLoading();
+
+                                if (!App.isConnected(getActivity()))
+                                    Snackbar.make(layout, getString(R.string.no_net), Snackbar.LENGTH_LONG).show();
+
+                            }
+                        });
+
+
+                    }
                 }
                 break;
             case R.id.profile_iv_twitter:
@@ -303,8 +365,6 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
             case R.id.profile_map:
                 if (profile != null) {
                     Intent map = new Intent(getActivity(), MapsActivity.class);
-                    System.err.println("lat" + profile.getLatitude());
-                    System.err.println("long" + profile.getLongitude());
                     map.putExtra(VAR.KEY_USER_NAME, profile.getUsername());
                     map.putExtra(VAR.LATITUDE, profile.getLatitude());
                     map.putExtra(VAR.LONGITUDE, profile.getLongitude());

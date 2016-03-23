@@ -64,6 +64,8 @@ public class PostActivity extends SuperActivity implements View.OnClickListener 
 
     private void getComments() {
         progressBar.setVisibility(View.VISIBLE);
+
+
         Retrofit.getInstance().getPostComments(1, post.getId(), new Callback<List<Comment>>() {
                     @Override
                     public void success(List<Comment> comments, Response response) {

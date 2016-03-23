@@ -162,8 +162,10 @@ public class AddPostFragment extends Fragment implements OnClickListener {
     public void onViewStateRestored(Bundle paramBundle) {
         super.onViewStateRestored(paramBundle);
         try {
-            if ((paramBundle.containsKey("FILEPATH")) && (paramBundle.getString("FILEPATH") != null)) {
-                CameraImage.photoFile = new File(paramBundle.getString("FILEPATH", ""));
+            if (paramBundle != null) {
+                if ((paramBundle.containsKey("FILEPATH")) & (paramBundle.getString("FILEPATH") != null)) {
+                    CameraImage.photoFile = new File(paramBundle.getString("FILEPATH", ""));
+                }
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -195,6 +197,8 @@ public class AddPostFragment extends Fragment implements OnClickListener {
         postImagesArray = new ArrayList<>(1);
 //        adapter = new PostImagesAdapter(getActivity(), postImagesArray);
 //        imagesRecyclerView.setAdapter(adapter);
+
+        layout.findViewById(R.id.addpost_header_option).setVisibility(View.GONE);
     }
 
 
