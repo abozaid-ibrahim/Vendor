@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,7 +46,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class ProfileFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
+public class ProfileFragment extends Fragment implements View.OnClickListener {
     private static ProfileFragment instance;
     View layout;
     Button editProfile;
@@ -101,7 +102,8 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
 
         findViewById();
         init();
-
+        getUser(userId);
+        getUserPosts(userId);
         return layout;
     }
 
@@ -126,16 +128,6 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
 
 
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-//        getUser();
-        getUser(userId);
-        getUserPosts(userId);
-
-    }
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -224,12 +216,11 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
     private void updateUI(Profile myProfile) {
         if (myProfile != null) {
             profile = myProfile;
-//            String follow=profile.fo
-            logoutButton.setText(isMyProfile ? getString(R.string.logout) : "");
             if (!isMyProfile) {
-
-
                 logoutButton.setText(profile.is_follow() ? getString(R.string.unfollow) : getString(R.string.follow));
+            } else {
+                logoutButton.setText(getString(R.string.logout));
+
             }
             followersTv.setText(String.valueOf(profile.getFollowing()));
             followingTv.setText(String.valueOf(profile.getFollower()));
@@ -267,89 +258,11 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
                 }
                 break;
             case R.id.profile_logout:
-                Log.e("profile", "logout");
+                if (profile != null)
                 if (isMyProfile) {
-
-                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
-                            .setTitle(getString(R.string.logout)).setMessage(getString(R.string.logout_now))
-                            .setPositiveButton(getString(R.string.logout), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    getActivity().getSharedPreferences(VAR.PREF_NAME, 0).edit().clear().commit();
-                                    dialog.dismiss();
-                                    Intent loginAct = new Intent(getActivity(), LoginActivity.class);
-                                    loginAct.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    loginAct.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(loginAct);
-
-//                                    getActivity().finish();
-
-                                }
-                            }).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            }).create();
-                    alertDialog.show();
-
+                    showLogoutAlert();
                 } else {
-                    //unfollow
-
-
-                    if (profile.is_follow()) {
-                        NetworkLoading.startLoading(getActivity());
-                        Retrofit.getInstance().followUser(1, App.userId, profile.getId(), new Callback<JsonObject>() {
-                            @Override
-                            public void success(JsonObject jsonObject, Response response) {
-                                NetworkLoading.stopLoading();
-                                logoutButton.setVisibility(View.GONE);
-
-                                logoutButton.setText(getString(R.string.unfollow));
-                                logoutButton.bringToFront();
-                                profile.setIs_follow(true);
-//                                logoutButton.setVisibility(View.VISIBLE);
-
-                            }
-
-                            @Override
-                            public void failure(RetrofitError error) {
-                                NetworkLoading.stopLoading();
-
-                                if (!App.isConnected(getActivity()))
-                                    Snackbar.make(layout, getString(R.string.no_net), Snackbar.LENGTH_LONG).show();
-
-                            }
-                        });
-
-                    } else {
-                        NetworkLoading.startLoading(getActivity());
-
-                        Retrofit.getInstance().unFollowUser(App.userId, profile.getId(), new Callback<JsonObject>() {
-                            @Override
-                            public void success(JsonObject jsonObject, Response response) {
-                                logoutButton.setVisibility(View.GONE);
-
-                                logoutButton.setText(getString(R.string.follow));
-                                profile.setIs_follow(false);
-//                                logoutButton.setVisibility(View.VISIBLE);
-
-                                NetworkLoading.stopLoading();
-                            }
-
-                            @Override
-                            public void failure(RetrofitError error) {
-                                NetworkLoading.stopLoading();
-
-                                if (!App.isConnected(getActivity()))
-                                    Snackbar.make(layout, getString(R.string.no_net), Snackbar.LENGTH_LONG).show();
-
-                            }
-                        });
-
-
-                    }
+                    followUnFollowUser();
                 }
                 break;
             case R.id.profile_iv_twitter:
@@ -383,6 +296,83 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
                 break;
             default:
                 break;
+        }
+    }
+
+    private void showLogoutAlert() {
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                .setTitle(getString(R.string.logout)).setMessage(getString(R.string.logout_now))
+                .setPositiveButton(getString(R.string.logout), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        getActivity().getSharedPreferences(VAR.PREF_NAME, 0).edit().clear().commit();
+                        dialog.dismiss();
+                        Intent loginAct = new Intent(getActivity(), LoginActivity.class);
+                        loginAct.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        loginAct.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(loginAct);
+
+//                                    getActivity().finish();
+
+                    }
+                }).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create();
+        alertDialog.show();
+
+    }
+
+    private void followUnFollowUser() {
+
+
+        if (profile.is_follow()) {
+            NetworkLoading.startLoading(getActivity());
+            Retrofit.getInstance().followUser(1, App.userId, profile.getId(), new Callback<JsonObject>() {
+                @Override
+                public void success(JsonObject jsonObject, Response response) {
+                    NetworkLoading.stopLoading();
+
+                    profile.setIs_follow(false);
+                    logoutButton.setText(getString(R.string.unfollow));
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    NetworkLoading.stopLoading();
+
+                    if (!App.isConnected(getActivity()))
+                        Snackbar.make(layout, getString(R.string.no_net), Snackbar.LENGTH_LONG).show();
+
+                }
+            });
+
+        } else {
+            NetworkLoading.startLoading(getActivity());
+
+            Retrofit.getInstance().unFollowUser(App.userId, profile.getId(), new Callback<JsonObject>() {
+                @Override
+                public void success(JsonObject jsonObject, Response response) {
+
+                    profile.setIs_follow(true);
+                    logoutButton.setText(getString(R.string.follow));
+                    NetworkLoading.stopLoading();
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    NetworkLoading.stopLoading();
+
+                    if (!App.isConnected(getActivity()))
+                        Snackbar.make(layout, getString(R.string.no_net), Snackbar.LENGTH_LONG).show();
+
+                }
+            });
+
+
         }
     }
 }

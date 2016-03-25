@@ -55,7 +55,9 @@
                         android:drawableStart="@drawable/user"
                         android:gravity="start"
                         android:hint="@string/user_name"
-                        android:padding="5.0dip"/>
+                        android:maxLines="1"
+                        android:padding="5.0dip"
+                        android:singleLine="true"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -73,7 +75,9 @@
                         android:gravity="start"
                         android:hint="@string/password"
                         android:inputType="textPassword"
-                        android:padding="5.0dip"/>
+                        android:maxLines="1"
+                        android:padding="5.0dip"
+                        android:singleLine="true"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -89,9 +93,10 @@
                         android:drawableStart="@drawable/email"
                         android:gravity="start"
                         android:hint="@string/email"
-
                         android:inputType="textEmailAddress"
-                        android:padding="5.0dip"/>
+                        android:maxLines="1"
+                        android:padding="5.0dip"
+                        android:singleLine="true"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -101,7 +106,6 @@
 
                     <EditText
                         android:id="@+id/signup_confEmail"
-
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_border_grey"
@@ -109,7 +113,9 @@
                         android:gravity="start"
                         android:hint="@string/conf_email"
                         android:inputType="textEmailAddress"
-                        android:padding="5.0dip"/>
+                        android:maxLines="1"
+                        android:padding="5.0dip"
+                        android:singleLine="true"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <Button

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout android:id="@+id/main_layout"
-                                                 xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 android:layout_width="fill_parent"
-                                                 android:layout_height="fill_parent"
-                                                 android:fitsSystemWindows="true">
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/main_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="fill_parent"
@@ -50,8 +51,10 @@
                     android:drawableStart="@drawable/user"
                     android:gravity="start"
                     android:hint="@string/user_name"
+                    android:maxLines="1"
+                    android:padding="5.0dip"
 
-                    android:padding="5.0dip"/>
+                    android:singleLine="true"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -69,7 +72,9 @@
                     android:gravity="start"
                     android:hint="@string/password"
                     android:inputType="textPassword"
+                    android:maxLines="1"
                     android:padding="5.0dip"
+                    android:singleLine="true"
                     />
             </android.support.design.widget.TextInputLayout>
 

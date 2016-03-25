@@ -74,7 +74,6 @@
     <string name="subject">Subject</string>
     <string name="logout_now">Log out now?</string>
     <string name="cancel">Cancel</string>
-    <string name="title_activity_dummy">DummyActivity</string>
     <string name="add_image">Add Image</string>
     <string name="loading">Loading...</string>
     <string name="camera">Camera</string>
